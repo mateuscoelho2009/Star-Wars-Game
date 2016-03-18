@@ -1,18 +1,20 @@
-import java.util.Vector;
+package IIIEpisode;
+
+import java.util.Vector.*;
 
 /*
  * That is the Character's base class. It will contain the base for
  * the development of subsequent characters.
  */
-public abstract class BaseCharacter {
+public abstract class BaseCharacter implements Common.HasMoveset {
 	// Attributes
-	private float[] position,
-		    velocity;
+	protected float[] position,
+		    	    velocity;
 	
-	private int life,
-				power;
+	protected int life,
+				  power;
 	
-	BaseCharacter (){
+	BaseCharacter () {
 		life = 0;
 		
 		position = new float[2];
@@ -23,12 +25,11 @@ public abstract class BaseCharacter {
 	}
 	
 	// Methods
-	
 	float[] getPosition() {
 		return position;
 	}
 	
 	float[] getVelocity() {
 		return velocity;
-	}
+	}	
 }
