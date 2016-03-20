@@ -13,8 +13,9 @@ public class IIIGameRunner extends JFrame {
 	
 	    add(new IIIGameBoard());
 	    
+	    setSize(400, 300);
 	    setResizable(false);
-	    pack();
+	    // pack();
 	    
 	    setTitle("Star Wars III Episode");
 	    setLocationRelativeTo(null);        
@@ -26,7 +27,7 @@ public class IIIGameRunner extends JFrame {
 	    EventQueue.invokeLater(new Runnable() {
 	        @Override
 	        public void run() {                
-	            JFrame ex = new IIIGameRunner();
+	            IIIGameRunner ex = new IIIGameRunner();
 	            ex.setVisible(true);                
 	        }
 	    });

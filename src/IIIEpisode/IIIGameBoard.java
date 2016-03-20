@@ -4,83 +4,75 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import javax.swing.JPanel;
-
 public class IIIGameBoard extends JPanel implements ActionListener {
-	
-	private final int B_WIDTH = 350;
-    private final int B_HEIGHT = 350;
-    private final int INITIAL_X = -40;
-    private final int INITIAL_Y = -40;
-    private final int DELAY = 25;
 
-    private Image star;
     private Timer timer;
-    private int x, y;
+    private Ken ken;
+    private final int DELAY = 10;
 
     public IIIGameBoard() {
 
         initBoard();
     }
-
-    private void loadImage() {
-
-        ImageIcon ii = new ImageIcon("star.png");
-        star = ii.getImage();
-    }
-
+    
     private void initBoard() {
-
+        
+        addKeyListener(new TAdapter());
+        setFocusable(true);
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        setDoubleBuffered(true);
 
-        loadImage();
-        
-        x = INITIAL_X;
-        y = INITIAL_Y;
-        
+        ken = new Ken();
+
         timer = new Timer(DELAY, this);
-        timer.start();
+        timer.start();        
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        drawStar(g);
+        doDrawing(g);
+
+        Toolkit.getDefaultToolkit().sync();
     }
 
-    private void drawStar(Graphics g) {
-
-        g.drawImage(star, x, y, this);
-        Toolkit.getDefaultToolkit().sync();
+    private void doDrawing(Graphics g) {
+        
+        Graphics2D g2d = (Graphics2D) g;
+        
+        float[] pos = ken.getPosition();
+        
+        g2d.drawImage(ken.getImage(), (int) pos[0], (int) pos[1], this);        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        x += 1;
-        y += 1;
-
-        if (y > B_HEIGHT) {
-
-            y = INITIAL_Y;
-            x = INITIAL_X;
-        }
-
+        
+        ken.move();
         repaint();
     }
 
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            ken.keyReleased(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            ken.keyPressed(e);
+        }
+    }
 }

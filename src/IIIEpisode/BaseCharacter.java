@@ -1,12 +1,19 @@
 package IIIEpisode;
 
 import java.util.Vector.*;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 /*
  * That is the Character's base class. It will contain the base for
  * the development of subsequent characters.
  */
 public abstract class BaseCharacter implements Common.HasMoveset {
+	// Constants
+	public final int X = 0,
+					 Y = 1;
+	
 	// Attributes
 	protected float[] position,
 		    	    velocity;
@@ -14,22 +21,29 @@ public abstract class BaseCharacter implements Common.HasMoveset {
 	protected int life,
 				  power;
 	
+	protected Image sprite;
+	
+	// Constructors
 	BaseCharacter () {
 		life = 0;
 		
 		position = new float[2];
-		position[0] = 0; position[1] = 0;
+		position[X] = 0; position[Y] = 0;
 		
 		velocity = new float[2];
-		velocity[0] = 0; velocity[1] = 0;
+		velocity[X] = 0; velocity[Y] = 0;
 	}
 	
 	// Methods
-	float[] getPosition() {
+	public Image getImage () {
+		return sprite;
+	}
+	
+	public float[] getPosition() {
 		return position;
 	}
 	
-	float[] getVelocity() {
+	public float[] getVelocity() {
 		return velocity;
 	}	
 }
