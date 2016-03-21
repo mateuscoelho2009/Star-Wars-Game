@@ -11,7 +11,7 @@ public class IIIGameRunner extends JFrame {
 	
 	private void initUI() {
 	
-	    add(new IIIGameBoard());
+	    add(new IIIGameBoard(this));
 	    
 	    setSize(400, 300);
 	    setResizable(false);

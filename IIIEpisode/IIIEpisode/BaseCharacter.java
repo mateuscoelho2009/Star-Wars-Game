@@ -1,8 +1,6 @@
 package IIIEpisode;
 
-import java.util.Vector.*;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /*
@@ -14,9 +12,13 @@ public abstract class BaseCharacter implements Common.HasMoveset {
 	public final int X = 0,
 					 Y = 1;
 	
+	enum State { STOP, BLOCKING, AIR };
+	
 	// Attributes
 	protected float[] position,
 		    	    velocity;
+	
+	protected State charState;
 	
 	protected int life,
 				  power;

@@ -1,19 +1,23 @@
 package IIIEpisode;
 
 import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 
+import Enviroment.EnviromentBase;
+
 public class Ken extends BaseCharacter {
+	EnviromentBase enviroment;
 	
 	// Constructor
-	Ken () {
+	Ken (EnviromentBase enviroment) {
 		super();
 		
-		initKen();
+		initKen(enviroment);
 	}
 	
 	// Methods
-	private void initKen () {
+	private void initKen (EnviromentBase enviroment) {
 		try {
 			ImageIcon ii = new ImageIcon("ken-sprite-sheet.png");
 			sprite = ii.getImage();
@@ -21,13 +25,21 @@ public class Ken extends BaseCharacter {
 			System.out.println("Monkey");
 		}
 		
+		this.enviroment = enviroment;
+		
+		charState = State.STOP;
+		
 		position[X] = 40;
 		position[Y] = 60;
 	}
 	
 	public void move () {
+		
+		
 		position[X] += velocity[X];
-		position[Y] += velocity[Y];
+		
+		if (charState != State.AIR || enviroment.checkEnviromentCollisionY(this))
+			position[Y] += velocity[Y];
 	}
 	
 	public void keyPressed (KeyEvent ke) {

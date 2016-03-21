@@ -2,7 +2,6 @@ package IIIEpisode;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,27 +10,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import Enviroment.FirstPhaseEnv;
 
 public class IIIGameBoard extends JPanel implements ActionListener {
 
     private Timer timer;
     private Ken ken;
     private final int DELAY = 10;
+    private JFrame frame;
 
-    public IIIGameBoard() {
-
-        initBoard();
+    public IIIGameBoard(JFrame frame) {
+        initBoard(frame);
     }
     
-    private void initBoard() {
-        
+    private void initBoard(JFrame frame) {
+        this.frame = frame;
+    	
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
+        
+        FirstPhaseEnv fpe = new FirstPhaseEnv(frame);
 
-        ken = new Ken();
+        ken = new Ken(fpe);
 
         timer = new Timer(DELAY, this);
         timer.start();        
@@ -60,6 +66,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         ken.move();
+        
         repaint();
     }
 
