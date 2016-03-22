@@ -1,44 +1,59 @@
 package IIIEpisode;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
+
+import Common.Sprite;
 
 /*
  * That is the Character's base class. It will contain the base for
  * the development of subsequent characters.
  */
-public abstract class BaseCharacter implements Common.HasMoveset {
+public abstract class BaseCharacter extends Sprite implements Common.HasMoveset {
 	// Constants
-	public final int X = 0,
-					 Y = 1;
-	
 	enum State { STOP, BLOCKING, AIR };
 	
 	// Attributes
-	protected float[] position,
-		    	    velocity;
+	protected float[] velocity,
+		    	      acceleration;
+	
+	protected float mass;
 	
 	protected State charState;
 	
 	protected int life,
 				  power;
 	
-	protected Image sprite;
-	
 	// Constructors
-	BaseCharacter () {
-		life = 0;
+	BaseCharacter (int x, int y) {
+		super(x, y);
 		
-		position = new float[2];
-		position[X] = 0; position[Y] = 0;
+		life = 0;
 		
 		velocity = new float[2];
 		velocity[X] = 0; velocity[Y] = 0;
+		
+		acceleration = new float[2];
+		acceleration[X] = 0; acceleration[Y] = 0;
 	}
 	
-	// Methods
-	public Image getImage () {
-		return sprite;
+	BaseCharacter () {
+		super();
+		
+		life = 0;
+		
+		velocity = new float[2];
+		velocity[X] = 0; velocity[Y] = 0;
+		
+		acceleration = new float[2];
+		acceleration[X] = 0; acceleration[Y] = 0;
+	}
+	
+	// Methods	
+	public BufferedImage getImage () {
+		return super.getImage();
 	}
 	
 	public float[] getPosition() {

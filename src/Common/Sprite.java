@@ -1,0 +1,103 @@
+package Common;
+
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+public abstract class Sprite {
+	// Constants
+	public final int X = 0,
+					 Y = 1;
+	
+	// Attributes
+    protected float[] position;
+    protected int width;
+    protected int height;
+    protected boolean vis;
+    
+    protected int atuSprite;
+    protected BufferedImage[] sprites;
+
+    // Constructors
+    public Sprite(int x, int y) {
+    	position = new float[2];
+    	
+        position[X] = x;
+        position[Y] = y;
+        vis = true;
+        
+        sprites = null;
+        atuSprite = -1;
+    }
+    
+    public Sprite() {
+    	position[X] = 0;
+        position[Y] = 0;
+        vis = true;
+        
+        sprites = null;
+        atuSprite = -1;
+    }
+
+    // Methods
+    protected void loadImage(String imageName, int width, int height, int rows, int cols, int deltax, int deltay) {
+    	BufferedImage bigImg = null;
+    	
+    	try {
+    		bigImg = ImageIO.read(new File(imageName));
+    	} catch (IOException e) {
+    		System.err.println("Image not found in: " + imageName);
+    		System.exit(0);
+    	}
+    	
+    	sprites = new BufferedImage[rows * cols];
+    	atuSprite = 0;
+
+    	for (int i = 0; i < rows; i++)
+    	{
+    	    for (int j = 0; j < cols; j++)
+    	    {
+    	        sprites[(i * cols) + j] = bigImg.getSubimage(
+    	            deltax + j * width,
+    	            deltay + i * height,
+    	            width,
+    	            height
+    	        );
+    	    }
+    	}
+    }
+    
+    protected void getImageDimensions() {
+        width = sprites[atuSprite].getWidth(null);
+        height = sprites[atuSprite].getHeight(null);
+    }    
+
+    public BufferedImage getImage() {
+        return sprites[atuSprite];
+    }
+
+    public int getX() {
+        return (int) position[X];
+    }
+
+    public int getY() {
+        return (int) position[Y];
+    }
+
+    public boolean isVisible() {
+        return vis;
+    }
+
+    public void setVisible(Boolean visible) {
+        vis = visible;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle((int) position[X], (int) position[Y], width, height);
+    }
+}

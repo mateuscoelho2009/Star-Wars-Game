@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 
 public class IIIGameRunner extends JFrame {
     
+	final int HEIGHT = 500,
+			  WIDTH = 700;
+	
 	IIIGameRunner() {
 	    initUI();
 	}
@@ -13,13 +16,14 @@ public class IIIGameRunner extends JFrame {
 	
 	    add(new IIIGameBoard(this));
 	    
-	    setSize(400, 300);
-	    setResizable(false);
+	    setSize(WIDTH, HEIGHT);
+	    setResizable(true);
 	    // pack();
 	    
 	    setTitle("Star Wars III Episode");
 	    setLocationRelativeTo(null);        
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    // setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public static void main(String[] args) {
@@ -28,7 +32,7 @@ public class IIIGameRunner extends JFrame {
 	        @Override
 	        public void run() {                
 	            IIIGameRunner ex = new IIIGameRunner();
-	            ex.setVisible(true);                
+	            ex.setVisible(true);
 	        }
 	    });
 	}
