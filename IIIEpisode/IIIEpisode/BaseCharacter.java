@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import Common.Sprite;
+import Enviroment.EnviromentBase;
 
 /*
  * That is the Character's base class. It will contain the base for
@@ -13,11 +14,13 @@ import Common.Sprite;
  */
 public abstract class BaseCharacter extends Sprite implements Common.HasMoveset {
 	// Constants
-	enum State { STOP, BLOCKING, AIR };
+	enum State { STOP, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2 };
 	
 	// Attributes
 	protected float[] velocity,
 		    	      acceleration;
+	
+	protected EnviromentBase enviroment;
 	
 	protected float mass;
 	
@@ -27,9 +30,11 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 				  power;
 	
 	// Constructors
-	BaseCharacter (int x, int y) {
+	BaseCharacter (EnviromentBase enviroment, int x, int y) {
 		super(x, y);
 		
+		this.enviroment = enviroment;
+		
 		life = 0;
 		
 		velocity = new float[2];
@@ -37,10 +42,14 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		
 		acceleration = new float[2];
 		acceleration[X] = 0; acceleration[Y] = 0;
+		
+		charState = State.STOP;
 	}
 	
-	BaseCharacter () {
+	BaseCharacter (EnviromentBase enviroment) {
 		super();
+		
+		this.enviroment = enviroment;
 		
 		life = 0;
 		
@@ -49,6 +58,40 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		
 		acceleration = new float[2];
 		acceleration[X] = 0; acceleration[Y] = 0;
+		
+		charState = State.STOP;
+	}
+	
+	BaseCharacter (EnviromentBase enviroment, int x, int y, State initialState) {
+		super(x, y);
+		
+		this.enviroment = enviroment;
+		
+		life = 0;
+		
+		velocity = new float[2];
+		velocity[X] = 0; velocity[Y] = 0;
+		
+		acceleration = new float[2];
+		acceleration[X] = 0; acceleration[Y] = 0;
+		
+		charState = initialState;
+	}
+	
+	BaseCharacter (EnviromentBase enviroment, State initialState) {
+		super();
+		
+		this.enviroment = enviroment;
+		
+		life = 0;
+		
+		velocity = new float[2];
+		velocity[X] = 0; velocity[Y] = 0;
+		
+		acceleration = new float[2];
+		acceleration[X] = 0; acceleration[Y] = 0;
+		
+		charState = initialState;
 	}
 	
 	// Methods	
@@ -62,5 +105,40 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	
 	public float[] getVelocity() {
 		return velocity;
-	}	
+	}
+	
+	public void move() {
+		float floorHeight = enviroment.getFloorHeight () - getImage().getHeight();
+		
+		if (position[Y] < floorHeight && velocity[Y] <= 0)
+			charState = State.AIRRISING;
+		else if (position[Y] < floorHeight)
+			charState = State.AIRFALLING;
+		else
+			charState = State.STOP;
+		
+		if (enviroment.checkEnviromentCollisionY(this)) {
+			position[Y] = floorHeight;
+			velocity[Y] = 0;
+		}
+		
+		if (enviroment.checkEnviromentLeftCollisionX(this)) {
+			position[X] = enviroment.getLeftWall();
+			velocity[X] = 0;
+		}
+		
+		if (enviroment.checkEnviromentRightCollisionX(this)) {
+			position[X] = enviroment.getRightWall() - getImage().getWidth();
+			velocity[X] = 0;
+		}
+		
+		position[X] += velocity[X];
+		
+		position[Y] += velocity[Y];
+		
+		acceleration = enviroment.EnvAcceleration(this);
+		
+		velocity[X] += acceleration[X];
+		velocity[Y] += acceleration[Y];
+	}
 }

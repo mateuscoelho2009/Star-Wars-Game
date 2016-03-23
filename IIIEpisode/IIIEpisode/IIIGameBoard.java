@@ -35,7 +35,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
         
         FirstPhaseEnv fpe = new FirstPhaseEnv(frame);
 
-        ken = new Ken(fpe, 0, 0);
+        ken = new Ken(fpe, 50, 0);
 
         timer = new Timer(DELAY, this);
         timer.start();

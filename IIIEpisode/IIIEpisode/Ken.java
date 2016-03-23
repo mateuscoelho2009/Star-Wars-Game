@@ -6,25 +6,28 @@ import javax.swing.ImageIcon;
 
 import Enviroment.EnviromentBase;
 
-public class Ken extends BaseCharacter {	
-	// Attributes
-	EnviromentBase enviroment;
-	
+public class Ken extends BaseCharacter {
 	// Constructor
-	Ken (EnviromentBase enviroment, int x, int y) {
-		super(x, y);
+	Ken (EnviromentBase enviroment, int x, int y, State initialState) {
+		super(enviroment, x, y, initialState);
 		
-		initKen(enviroment);
+		initKen();
+	}
+	
+	Ken (EnviromentBase enviroment, int x, int y) {
+		super(enviroment, x, y);
+		
+		initKen();
 	}
 	
 	Ken (EnviromentBase enviroment) {
-		super();
+		super(enviroment);
 		
-		initKen(enviroment);
+		initKen();
 	}
 	
 	// Methods
-	private void initKen (EnviromentBase enviroment) {
+	private void initKen () {
 		int deltax_ = 19;
 		int deltay_ = 10;
 		width = 70;
@@ -38,31 +41,10 @@ public class Ken extends BaseCharacter {
 		} catch (Exception e) {
 			
 		}
-		
-		this.enviroment = enviroment;
-		
-		charState = State.STOP;
 	}
 	
 	public void move () {
-		if (position[Y] < enviroment.getFloorHeight () - getImage().getHeight())
-			charState = State.AIR;
-		else
-			charState = State.STOP;
-		
-		if (enviroment.checkEnviromentCollisionY(this) && velocity[Y] > 0) {
-			position[Y] = enviroment.getFloorHeight () - getImage().getHeight();
-			velocity[Y] = 0;
-		}
-		
-		position[X] += velocity[X];
-		
-		position[Y] += velocity[Y];
-		
-		acceleration = enviroment.EnvAcceleration(this);
-		
-		velocity[X] += acceleration[X];
-		velocity[Y] += acceleration[Y];
+		super.move();
 	}
 	
 	public void keyPressed (KeyEvent ke) {
@@ -76,7 +58,8 @@ public class Ken extends BaseCharacter {
             velocity[X] = 4;
         }
 
-        if (key == KeyEvent.VK_UP && charState != State.AIR) {
+        if (key == KeyEvent.VK_UP && 
+        	(charState != State.AIRRISING && charState != State.AIRFALLING)) {
             velocity[Y] = -10;
         }
 

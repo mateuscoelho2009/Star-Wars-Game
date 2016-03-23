@@ -18,7 +18,10 @@ public abstract class EnviromentBase {
 	// Methods
 	abstract protected void initEnviroment ();
 	abstract public boolean checkEnviromentCollisionY (BaseCharacter bc);
-	abstract public boolean checkEnviromentCollisionX (BaseCharacter bc);
+	abstract public boolean checkEnviromentLeftCollisionX (BaseCharacter bc);
+	abstract public boolean checkEnviromentRightCollisionX (BaseCharacter bc);
 	abstract public float[] EnvAcceleration (BaseCharacter bc);
-	abstract public float getFloorHeight();
+	abstract public float getFloorHeight ();
+	abstract public float getLeftWall ();
+	abstract public float getRightWall ();
 }

@@ -8,7 +8,7 @@ import IIIEpisode.BaseCharacter;
 
 public class FirstPhaseEnv extends EnviromentBase {
 	final int FLOOR_Y = 70;
-	final int HORIZ_TOLERANCE = 10;
+	final int HORIZ_TOLERANCE = 20;
 	
 	// Scenery Constants
 	final float GRAV = 9.87f,
@@ -16,10 +16,12 @@ public class FirstPhaseEnv extends EnviromentBase {
 	
 	private JFrame frame;
 	
+	// Constructor
 	public FirstPhaseEnv(JFrame frame) {
 		this.frame = frame;
 	}
 
+	// Methods
 	@Override
 	protected void initEnviroment() {
 		
@@ -45,30 +47,40 @@ public class FirstPhaseEnv extends EnviromentBase {
 		return cEnvCol;
 	}
 	
+	private boolean checkFloorCollision(BaseCharacter bc) {
+		Rectangle bounds = bc.getBounds();
+		float[] velocity = bc.getVelocity();
+		
+		return (bounds.getMaxY() >= getFloorHeight()) && (velocity[1] > 0);
+	}
+	
 	@Override
-	public boolean checkEnviromentCollisionX (BaseCharacter bc) {
-		float[] pos = bc.getPosition();
+	public boolean checkEnviromentRightCollisionX (BaseCharacter bc) {
 		float[] vel = bc.getVelocity();
 		Rectangle bounds = bc.getBounds();
 		
-		boolean leftCol = (vel[0] < 0) && (pos[0] >= HORIZ_TOLERANCE),
-				rightCol = (vel[0] > 0) && (pos[0] <= frame.getWidth() - HORIZ_TOLERANCE);
-		
-		return (leftCol || rightCol);
-	}
-
-	private boolean checkFloorCollision(BaseCharacter bc) {
-		float[] pos = bc.getPosition();
-		Rectangle bounds = bc.getBounds();
-		
-		//System.out.println((bounds.getMaxY() >= frame.getHeight() - FLOOR_Y));
-		
-		// TODO: Fix this.
-		return (bounds.getMaxY() >= frame.getHeight() - FLOOR_Y);
+		return (vel[0] > 0) && (bounds.getMaxX() >= getRightWall());
 	}
 	
+	@Override
+	public boolean checkEnviromentLeftCollisionX (BaseCharacter bc) {
+		float[] vel = bc.getVelocity();
+		
+		return (vel[0] < 0) && (bc.getPosition()[0] <= getLeftWall());
+	}
+	
+	@Override
 	public float getFloorHeight () {
 		return frame.getHeight() - FLOOR_Y;
 	}
-
+	
+	@Override
+	public float getLeftWall () {
+		return HORIZ_TOLERANCE;
+	}
+	
+	@Override
+	public float getRightWall () {
+		return frame.getWidth() - HORIZ_TOLERANCE;
+	}
 }
