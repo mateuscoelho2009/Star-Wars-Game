@@ -14,7 +14,8 @@ import Enviroment.EnviromentBase;
  */
 public abstract class BaseCharacter extends Sprite implements Common.HasMoveset {
 	// Constants
-	enum State { STOP, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2 };
+	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2 };
+	enum Orientation { RIGHT, LEFT };
 	
 	// Attributes
 	protected float[] velocity,
@@ -25,6 +26,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	protected float mass;
 	
 	protected State charState;
+	protected Orientation orientation;
 	
 	protected int life,
 				  power;
@@ -44,6 +46,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		acceleration[X] = 0; acceleration[Y] = 0;
 		
 		charState = State.STOP;
+		orientation = Orientation.LEFT;
 	}
 	
 	BaseCharacter (EnviromentBase enviroment) {
@@ -60,6 +63,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		acceleration[X] = 0; acceleration[Y] = 0;
 		
 		charState = State.STOP;
+		orientation = Orientation.LEFT;
 	}
 	
 	BaseCharacter (EnviromentBase enviroment, int x, int y, State initialState) {
@@ -76,6 +80,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		acceleration[X] = 0; acceleration[Y] = 0;
 		
 		charState = initialState;
+		orientation = Orientation.LEFT;
 	}
 	
 	BaseCharacter (EnviromentBase enviroment, State initialState) {
@@ -92,6 +97,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		acceleration[X] = 0; acceleration[Y] = 0;
 		
 		charState = initialState;
+		orientation = Orientation.LEFT;
 	}
 	
 	// Methods	
@@ -107,13 +113,19 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		return velocity;
 	}
 	
-	public void move() {
+	public void update () {
+		move ();
+	}
+	
+	private void move() {
 		float floorHeight = enviroment.getFloorHeight () - getImage().getHeight();
 		
 		if (position[Y] < floorHeight && velocity[Y] <= 0)
 			charState = State.AIRRISING;
 		else if (position[Y] < floorHeight)
 			charState = State.AIRFALLING;
+		else if (velocity[X] != 0)
+			charState = State.WALKING;
 		else
 			charState = State.STOP;
 		
@@ -133,7 +145,6 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		}
 		
 		position[X] += velocity[X];
-		
 		position[Y] += velocity[Y];
 		
 		acceleration = enviroment.EnvAcceleration(this);

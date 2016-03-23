@@ -63,7 +63,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        ken.move();
+        ken.update();
         
         repaint();
     }

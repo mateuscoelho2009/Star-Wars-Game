@@ -72,6 +72,18 @@ public abstract class Sprite {
     	}
     }
     
+    protected void loadImage(String imageName) {
+    	sprites = new BufferedImage[1];
+    	atuSprite = 0;
+    	
+    	try {
+    		sprites[0] = ImageIO.read(new File(imageName));
+    	} catch (IOException e) {
+    		System.err.println("Image not found in: " + imageName);
+    		System.exit(0);
+    	}
+    }
+    
     protected void getImageDimensions() {
         width = sprites[atuSprite].getWidth(null);
         height = sprites[atuSprite].getHeight(null);
@@ -98,6 +110,6 @@ public abstract class Sprite {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int) position[X], (int) position[Y], width, height);
+        return new Rectangle((int) position[X], (int) position[Y], sprites[atuSprite].getWidth(), sprites[atuSprite].getHeight());
     }
 }
