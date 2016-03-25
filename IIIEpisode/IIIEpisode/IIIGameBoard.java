@@ -18,9 +18,9 @@ import Enviroment.FirstPhaseEnv;
 public class IIIGameBoard extends JPanel implements ActionListener {
 
     private Timer timer;
-    private Ken ken;
     private final int DELAY = 10;
     private JFrame frame;
+    FirstPhaseEnv fpe;
 
     public IIIGameBoard(JFrame frame) {
         initBoard(frame);
@@ -33,9 +33,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
         setFocusable(true);
         setBackground(Color.BLACK);
         
-        FirstPhaseEnv fpe = new FirstPhaseEnv(frame);
-
-        ken = new Ken(fpe, 50, 0);
+        fpe = new FirstPhaseEnv(frame);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -55,15 +53,13 @@ public class IIIGameBoard extends JPanel implements ActionListener {
         
         Graphics2D g2d = (Graphics2D) g;
         
-        float[] pos = ken.getPosition();
-        
-        g2d.drawImage(ken.getImage(), (int) pos[0], (int) pos[1], this);        
+        fpe.doDrawing(g2d);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        ken.update();
+    	fpe.update();
         
         repaint();
     }
@@ -72,12 +68,12 @@ public class IIIGameBoard extends JPanel implements ActionListener {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            ken.keyReleased(e);
+            fpe.keyReleased(e);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            ken.keyPressed(e);
+            fpe.keyPressed(e);
         }
     }
 }

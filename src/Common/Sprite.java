@@ -21,7 +21,11 @@ public abstract class Sprite {
     protected boolean vis;
     
     protected int atuSprite;
+    
+    // You can choose to use the sprite mode
     protected BufferedImage[] sprites;
+    // You can use the animation class
+    protected Animation animation;
 
     // Constructors
     public Sprite(int x, int y) {

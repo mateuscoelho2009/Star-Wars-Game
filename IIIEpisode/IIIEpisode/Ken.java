@@ -1,6 +1,8 @@
 package IIIEpisode;
 
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,23 +16,22 @@ import Enviroment.EnviromentBase;
 public class Ken extends BaseCharacter {
 	// Attributes
 	private Animation standing,
-					  walkingLeft,
-					  animation;
+					  walkingLeft;
 	
 	// Constructor
-	Ken (EnviromentBase enviroment, int x, int y, State initialState) {
+	public Ken (EnviromentBase enviroment, int x, int y, State initialState) {
 		super(enviroment, x, y, initialState);
 		
 		initKen();
 	}
 	
-	Ken (EnviromentBase enviroment, int x, int y) {
+	public Ken (EnviromentBase enviroment, int x, int y) {
 		super(enviroment, x, y);
 		
 		initKen();
 	}
 	
-	Ken (EnviromentBase enviroment) {
+	public Ken (EnviromentBase enviroment) {
 		super(enviroment);
 		
 		initKen();
@@ -81,100 +82,79 @@ public class Ken extends BaseCharacter {
     	
     	standing = new Animation(standVector, 10);
     	
-    	BufferedImage[] walkingLeftVector = new BufferedImage[12];
+    	BufferedImage[] walkingLeftVector = new BufferedImage[11];
     	
-    	// Loading the Walking Left Sprite
-    	for (int j = 10; j < 22; j++)
-	    {
-    		if (j == 10)
-		        sprites[j] = bigImg.getSubimage(
-		            0 + (j - 10) * 70 + (j - 10) * 10,
-		            140,
-		            70,
-		            140
-		        );
-    		else if (j == 11)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        140
-    		    );
-    		else if (j == 12)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 13)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 14)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 15)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 16)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 17)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        100
-    		    );
-    		else if (j == 18)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        120
-    		    );
-    		else if (j == 19)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        70,
-    		        130
-    		    );
-    		else if (j == 20)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        90,
-    		        130
-    		    );
-    		else if (j == 21)
-    			sprites[j] = bigImg.getSubimage(
-    		        19 + (j - 10) * 70 + (j - 10) * 10,
-    		        140,
-    		        90,
-    		        130
-    		    );
-    		
-    		walkingLeftVector[j - 10] = sprites[j - 10];
-	    }
+    	width = 70;
+    	height = 130;
     	
-    	walkingLeft = new Animation(walkingLeftVector, 10);
+    	walkingLeftVector[0] = bigImg.getSubimage(
+	            0,
+	            130,
+	            90,
+	            120
+	        );
+    	walkingLeftVector[1] = bigImg.getSubimage(
+	            110,
+	            130,
+	            90,
+	            120
+	        );
+    	walkingLeftVector[2] = bigImg.getSubimage(
+	            210,
+	            130,
+	            80,
+	            120
+	        );
+    	walkingLeftVector[3] = bigImg.getSubimage(
+	            300,
+	            130,
+	            70,
+	            120
+	        );
+	    walkingLeftVector[4] = bigImg.getSubimage(
+	            380,
+	            130,
+	            80,
+	            120
+	        );
+    	walkingLeftVector[5] = bigImg.getSubimage(
+	            470,
+	            130,
+	            70,
+	            125
+	        );        
+    	walkingLeftVector[6] = bigImg.getSubimage(
+	            550,
+	            130,
+	            70,
+	            120
+	        );
+	    walkingLeftVector[7] = bigImg.getSubimage(
+    			630,
+	            130,
+	            90,
+	            120
+	        );
+    	walkingLeftVector[8] = bigImg.getSubimage(
+    			730,
+	            130,
+	            90,
+	            120
+	        );
+    	walkingLeftVector[9] = bigImg.getSubimage(
+    			830,
+	            130,
+	            90,
+	            120
+	        );
+    	walkingLeftVector[10] = bigImg.getSubimage(
+    			930,
+	            135,
+	            90,
+	            115
+	        );
+    	
+    	walkingLeft = new Animation(walkingLeftVector, 7);
 	}
 	
 	public void update () {
@@ -190,18 +170,26 @@ public class Ken extends BaseCharacter {
 	
 	private void atuAnimation () {
 		if (charState == State.WALKING && animation != walkingLeft) {
-			
+			BufferedImage prevImage = animation.getSprite();
 			
 			animation.stop();
 			animation.reset();
 			animation = walkingLeft;
 			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
 		}
 		else if (charState == State.STOP && animation != standing) {
+			BufferedImage prevImage = animation.getSprite();
+			
 			animation.stop();
 			animation.reset();
 			animation = standing;
 			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
 		}
 	}
 	
@@ -209,15 +197,16 @@ public class Ken extends BaseCharacter {
 		// super.move();
 	}
 	
+	@Override
 	public void keyPressed (KeyEvent ke) {
 		int key = ke.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-        	velocity[X] = -4;
+        	velocity[X] = -2;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            velocity[X] = 4;
+            velocity[X] = 2;
         }
 
         if (key == KeyEvent.VK_UP && 
@@ -226,6 +215,7 @@ public class Ken extends BaseCharacter {
         }
 	}
 	
+	@Override
 	public void keyReleased (KeyEvent ke) {
 		int key = ke.getKeyCode();
 
@@ -240,7 +230,17 @@ public class Ken extends BaseCharacter {
 	
 	@Override
 	public BufferedImage getImage () {
-		return animation.getSprite();
+		
+		BufferedImage image = animation.getSprite();
+		
+		if (orientation == Orientation.RIGHT) {
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+			tx.translate(- image.getWidth(null), 0);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+	        image = op.filter(image, null);
+		}
+		
+		return image;
 	}
 
 	@Override

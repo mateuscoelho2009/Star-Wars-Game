@@ -1,6 +1,9 @@
 package IIIEpisode;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -102,7 +105,17 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	
 	// Methods	
 	public BufferedImage getImage () {
-		return super.getImage();
+		
+		BufferedImage image = super.getImage();
+		
+		if (orientation == Orientation.RIGHT) {
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+			tx.translate(- image.getWidth(null), 0);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+	        image = op.filter(image, null);
+		}
+        
+		return image;
 	}
 	
 	public float[] getPosition() {
@@ -131,17 +144,17 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		
 		if (enviroment.checkEnviromentCollisionY(this)) {
 			position[Y] = floorHeight;
-			velocity[Y] = 0;
+			// velocity[Y] = 0;
 		}
 		
 		if (enviroment.checkEnviromentLeftCollisionX(this)) {
 			position[X] = enviroment.getLeftWall();
-			velocity[X] = 0;
+			//velocity[X] = 0;
 		}
 		
 		if (enviroment.checkEnviromentRightCollisionX(this)) {
 			position[X] = enviroment.getRightWall() - getImage().getWidth();
-			velocity[X] = 0;
+			//velocity[X] = 0;
 		}
 		
 		position[X] += velocity[X];
@@ -152,4 +165,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 	}
+	
+	public abstract void keyPressed(KeyEvent e);
+	public abstract void keyReleased(KeyEvent e);
 }

@@ -1,6 +1,8 @@
 package Enviroment;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,12 @@ public abstract class EnviromentBase {
 	
 	// Methods
 	abstract protected void initEnviroment ();
+	
+	abstract public void doDrawing (Graphics2D g);
+	abstract public void update ();
+	abstract public void keyPressed(KeyEvent e);
+	abstract public void keyReleased(KeyEvent e);
+	
 	abstract public boolean checkEnviromentCollisionY (BaseCharacter bc);
 	abstract public boolean checkEnviromentLeftCollisionX (BaseCharacter bc);
 	abstract public boolean checkEnviromentRightCollisionX (BaseCharacter bc);
