@@ -26,15 +26,14 @@ public class BasePhase extends EnviromentBase {
 		this.frame = frame;
 		
 		// initEnviroment();
-	}
-	
+	}	
 
 	// Methods
 	@Override
 	protected void initEnviroment() {
 		characters = new BaseCharacter[2];
 		
-		characters[0] = new Ken(this, 50, 500);
+		characters[0] = new Ken(this, 500, 500);
 		characters[1] = new Ken(this, 50, 100);
 	}
 
