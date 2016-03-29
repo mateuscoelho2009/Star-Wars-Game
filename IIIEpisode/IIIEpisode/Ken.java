@@ -10,13 +10,17 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import localInterfaces.UserControlled;
 import Common.Animation;
 import Enviroment.EnviromentBase;
 
 public class Ken extends BaseCharacter {
+	private static final int MAX_HEALTH_POINTS = 300;
 	// Attributes
 	private Animation standing,
 					  walkingLeft;
+	
+	private boolean hasOwnIntelligence;
 	
 	// Constructor
 	public Ken (EnviromentBase enviroment, int x, int y, State initialState) {
@@ -37,7 +41,43 @@ public class Ken extends BaseCharacter {
 		initKen();
 	}
 	
+	public Ken (EnviromentBase enviroment, int x, int y, State initialState, boolean isCPU) {
+		super(enviroment, x, y, initialState);
+		
+		initKen(isCPU);
+	}
+	
+	public Ken (EnviromentBase enviroment, int x, int y, boolean isCPU) {
+		super(enviroment, x, y);
+		
+		initKen(isCPU);
+	}
+	
+	public Ken (EnviromentBase enviroment, boolean isCPU) {
+		super(enviroment);
+		
+		initKen(isCPU);
+	}
+	
 	// Methods
+	private void initKen (boolean isCPU) {
+		try {
+			String strPath = System.getProperty("user.dir") + "\\src\\Images";
+			loadImage(strPath + "\\ken-sprite-sheet.png");
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		
+		hasOwnIntelligence = isCPU;
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
+		
+		animation = standing;
+		animation.start();
+	}
+	
 	private void initKen () {
 		try {
 			String strPath = System.getProperty("user.dir") + "\\src\\Images";
@@ -45,6 +85,12 @@ public class Ken extends BaseCharacter {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+		
+		hasOwnIntelligence = false;
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
 		
 		animation = standing;
 		animation.start();

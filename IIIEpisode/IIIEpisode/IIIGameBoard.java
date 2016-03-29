@@ -16,10 +16,9 @@ import javax.swing.Timer;
 import Enviroment.FirstPhaseEnv;
 
 public class IIIGameBoard extends JPanel implements ActionListener {
-
     private Timer timer;
     private final int DELAY = 10;
-    private JFrame frame;
+    // private JFrame frame;
     FirstPhaseEnv fpe;
 
     public IIIGameBoard(JFrame frame) {
@@ -27,7 +26,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
     }
     
     private void initBoard(JFrame frame) {
-        this.frame = frame;
+        // this.frame = frame;
     	
         addKeyListener(new TAdapter());
         setFocusable(true);

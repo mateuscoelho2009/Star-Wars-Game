@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
+import localInterfaces.UserControlled;
 import Common.Sprite;
 import Enviroment.EnviromentBase;
 
@@ -15,7 +16,7 @@ import Enviroment.EnviromentBase;
  * That is the Character's base class. It will contain the base for
  * the development of subsequent characters.
  */
-public abstract class BaseCharacter extends Sprite implements Common.HasMoveset {
+public abstract class BaseCharacter extends Sprite implements Common.HasMoveset , UserControlled {
 	// Constants
 	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2 };
 	enum Orientation { RIGHT, LEFT };
@@ -149,17 +150,14 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		
 		if (enviroment.checkEnviromentCollisionY(this)) {
 			position[Y] = floorHeight;
-			// velocity[Y] = 0;
 		}
 		
 		if (enviroment.checkEnviromentLeftCollisionX(this)) {
 			position[X] = enviroment.getLeftWall();
-			//velocity[X] = 0;
 		}
 		
 		if (enviroment.checkEnviromentRightCollisionX(this)) {
 			position[X] = enviroment.getRightWall() - getImage().getWidth();
-			//velocity[X] = 0;
 		}
 		
 		position[X] += velocity[X];
@@ -170,9 +168,4 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 	}
-	
-	
-	
-	public abstract void keyPressed(KeyEvent e);
-	public abstract void keyReleased(KeyEvent e);
 }

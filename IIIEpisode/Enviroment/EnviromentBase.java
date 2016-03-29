@@ -3,6 +3,7 @@ package Enviroment;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import IIIEpisode.BaseCharacter;
 
 public abstract class EnviromentBase {
 	// Attributes
-	Image scenary;
+	BufferedImage[] scenary;
 	
 	// Constructors
 	EnviromentBase () {
