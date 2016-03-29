@@ -3,10 +3,14 @@ package Enviroment;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import Attacks.NonSpriteAttack;
+import Attacks.SpriteAttack;
 import IIIEpisode.BaseCharacter;
+import IIIEpisode.HealthBar;
 import IIIEpisode.Ken;
 
 public class BasePhase extends EnviromentBase {
@@ -25,16 +29,22 @@ public class BasePhase extends EnviromentBase {
 	BasePhase (JFrame frame) {
 		this.frame = frame;
 		
-		// initEnviroment();
+		initEnviroment();
 	}	
 
 	// Methods
 	@Override
 	protected void initEnviroment() {
+		float[] hpPos = new float[2];
+		hpPos[0] = 350;
+		
 		characters = new BaseCharacter[2];
 		
 		characters[0] = new Ken(this, 500, 500);
-		characters[1] = new Ken(this, 50, 500);
+		characters[1] = new Ken(this, 50, 500, hpPos);
+		
+		sAttacks = new ArrayList<SpriteAttack>();
+		nsAttacks = new ArrayList<NonSpriteAttack>();
 	}
 
 	@Override
@@ -46,6 +56,10 @@ public class BasePhase extends EnviromentBase {
 	       	float[] pos = bc.getPosition();
 	       	
 	       	g.drawImage(bc.getImage(), (int) pos[0], (int) pos[1], frame);
+	       	
+	       	pos = bc.getHPBarPos();
+	       	
+	       	g.drawImage(bc.getHPBar(), (int) pos[0], (int) pos[1], frame);
 	    }
 	}
 		
@@ -56,6 +70,10 @@ public class BasePhase extends EnviromentBase {
 		for (int i = 0; i < length_; i++) {
 	       	characters[i].update();
 	    }
+		
+		/*
+		 * TODO: Destroy Attacks that were destroyed.
+		 */
 	}
 		
 	@Override
@@ -69,10 +87,7 @@ public class BasePhase extends EnviromentBase {
 		// TODO Auto-generated method stub
 		characters[0].keyReleased(e);
 	}
-		
-	/*
-	 * 
-	 */
+	
 	@Override
 	public float[] EnvAcceleration (BaseCharacter bc) {
 		float[] acceleration = new float[2];
@@ -85,6 +100,27 @@ public class BasePhase extends EnviromentBase {
 		
 		return acceleration;
 	}
+	
+	@Override
+	public float getDamage(BaseCharacter bc) {
+		float damage = 0f;
+		
+		for (NonSpriteAttack nsAttack : nsAttacks) {
+			if (nsAttack.collided(bc)) {
+				damage += nsAttack.getDamage();
+				nsAttack.destroy();
+			}
+		}
+		
+		for (SpriteAttack sAttack : sAttacks) {
+			if (sAttack.collided(bc)) {
+				damage += sAttack.getDamage();
+				sAttack.destroy();
+			}
+		}
+		
+		return damage;
+	};
 
 	@Override
 	public boolean checkEnviromentCollisionY (BaseCharacter bc) {

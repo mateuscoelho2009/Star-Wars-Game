@@ -1,5 +1,6 @@
 package IIIEpisode;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -9,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Attacks.SimpleAttack;
 import Common.Animation;
 import Enviroment.EnviromentBase;
 
@@ -57,6 +59,42 @@ public class Ken extends BaseCharacter {
 		initKen(isCPU);
 	}
 	
+	public Ken (EnviromentBase enviroment, int x, int y, State initialState, float[] hpPos) {
+		super(enviroment, x, y, initialState);
+		
+		initKen(hpPos);
+	}
+	
+	public Ken (EnviromentBase enviroment, int x, int y, float[] hpPos) {
+		super(enviroment, x, y);
+		
+		initKen(hpPos);
+	}
+	
+	public Ken (EnviromentBase enviroment, float[] hpPos) {
+		super(enviroment);
+		
+		initKen(hpPos);
+	}
+	
+	public Ken (EnviromentBase enviroment, int x, int y, State initialState, boolean isCPU, float[] hpPos) {
+		super(enviroment, x, y, initialState);
+		
+		initKen(isCPU, hpPos);
+	}
+	
+	public Ken (EnviromentBase enviroment, int x, int y, boolean isCPU, float[] hpPos) {
+		super(enviroment, x, y);
+		
+		initKen(isCPU, hpPos);
+	}
+	
+	public Ken (EnviromentBase enviroment, boolean isCPU, float[] hpPos) {
+		super(enviroment);
+		
+		initKen(isCPU, hpPos);
+	}
+	
 	// Methods
 	private void initKen (boolean isCPU) {
 		try {
@@ -71,6 +109,8 @@ public class Ken extends BaseCharacter {
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
 		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS);
 		
 		animation = standing;
 		animation.start();
@@ -89,6 +129,48 @@ public class Ken extends BaseCharacter {
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
 		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS);
+		
+		animation = standing;
+		animation.start();
+	}
+	
+	private void initKen (boolean isCPU, float[] hpPos) {
+		try {
+			String strPath = System.getProperty("user.dir") + "\\src\\Images";
+			loadImage(strPath + "\\ken-sprite-sheet.png");
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		
+		hasOwnIntelligence = isCPU;
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS, hpPos);
+		
+		animation = standing;
+		animation.start();
+	}
+	
+	private void initKen (float[] hpPos) {
+		try {
+			String strPath = System.getProperty("user.dir") + "\\src\\Images";
+			loadImage(strPath + "\\ken-sprite-sheet.png");
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		
+		hasOwnIntelligence = false;
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS, hpPos);
 		
 		animation = standing;
 		animation.start();
@@ -270,6 +352,11 @@ public class Ken extends BaseCharacter {
         if (key == KeyEvent.VK_RIGHT) {
             velocity[X] = 0;
         }
+        
+        if (key == KeyEvent.VK_SPACE) {
+        	charState = State.MOVE1;
+        	Move1();
+        }
 	}
 	
 	@Override
@@ -286,11 +373,22 @@ public class Ken extends BaseCharacter {
 		
 		return image;
 	}
+	
+	@Override
+	protected void initHPBar (float maxLife) {
+		hpBar = new HealthBar(maxLife);
+	}
+	
+	@Override
+	protected void initHPBar (float maxLife, float[] hpPos) {
+		hpBar = new HealthBar(maxLife, hpPos);
+	}
 
 	@Override
 	public void Move1() {
-		// TODO Auto-generated method stub
-
+		Rectangle damageArea = new Rectangle((int) (position[0] - 10), (int) (position[1] + 10), 10, 10);
+		
+		enviroment.addNonSpriteAttack (new SimpleAttack(power, damageArea, this));
 	}
 
 	@Override

@@ -1,15 +1,21 @@
 package Enviroment;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import Attacks.NonSpriteAttack;
+import Attacks.SpriteAttack;
 import Common.Sprite;
 import IIIEpisode.BaseCharacter;
 
 public abstract class EnviromentBase extends Sprite {
 	// Attributes
 	BufferedImage[] scenary;
+	ArrayList<NonSpriteAttack> nsAttacks;
+	ArrayList<SpriteAttack> sAttacks;
 	
 	// Constructors
 	EnviromentBase () {
@@ -29,6 +35,7 @@ public abstract class EnviromentBase extends Sprite {
 	abstract public boolean checkEnviromentCollisionY (BaseCharacter bc);
 	abstract public boolean checkEnviromentLeftCollisionX (BaseCharacter bc);
 	abstract public boolean checkEnviromentRightCollisionX (BaseCharacter bc);
+	abstract public float getDamage (BaseCharacter bc);
 	abstract public float[] EnvAcceleration (BaseCharacter bc);
 	abstract public float getFloorHeight ();
 	abstract public float getLeftWall ();
@@ -40,5 +47,13 @@ public abstract class EnviromentBase extends Sprite {
 		float velocity = 0f;
 		
 		return velocity;
+	}
+
+	public void addNonSpriteAttack (NonSpriteAttack nsAttack) {
+		nsAttacks.add(nsAttack);
+	};
+	
+	public void addSpriteAttack (SpriteAttack sAttack) {
+		sAttacks.add(sAttack);
 	}
 }

@@ -1,5 +1,6 @@
 package IIIEpisode;
 
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ import Enviroment.EnviromentBase;
  */
 public abstract class BaseCharacter extends Sprite implements Common.HasMoveset , UserControlled {
 	// Constants
-	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2 };
+	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2, DAMAGE };
 	enum Orientation { RIGHT, LEFT };
 	
 	// Attributes
@@ -24,6 +25,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	protected EnviromentBase enviroment;
 	
 	protected float mass;
+	protected HealthBar hpBar;
 	
 	protected State charState;
 	protected Orientation orientation;
@@ -115,6 +117,19 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		return image;
 	}
 	
+	public BufferedImage getHPBar () {
+		return hpBar.getImage();
+	}
+	
+	public float[] getHPBarPos () {
+		float[] pos = new float[2];
+		
+		pos[0] = hpBar.getX();
+		pos[1] = hpBar.getY();
+		
+		return pos;
+	}
+	
 	public float[] getPosition() {
 		return position;
 	}
@@ -124,6 +139,13 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	}
 	
 	public void update () {
+		float damage = enviroment.getDamage(this);
+		
+		if (damage > 0) {
+			charState = State.DAMAGE;
+			receiveDamage(damage);
+		}
+		
 		move ();
 	}
 	
@@ -164,4 +186,20 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 	}
+	
+	@Override
+	public Rectangle getBounds() {
+        return new Rectangle((int) position[X], 
+        					 (int) position[Y],
+        					 sprites[atuSprite].getWidth(),
+        					 sprites[atuSprite].getHeight());
+    }
+	
+	protected void receiveDamage (float d) {
+		life -= d;
+		hpBar.setDamage(d);
+	}
+	
+	abstract protected void initHPBar (float maxLife);
+	abstract protected void initHPBar (float maxLife, float[] hpBar);
 }
