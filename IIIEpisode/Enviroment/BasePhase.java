@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-import Common.Animation;
 import IIIEpisode.BaseCharacter;
 import IIIEpisode.Ken;
 
@@ -21,7 +20,6 @@ public class BasePhase extends EnviromentBase {
 	// Attributes
 	protected JFrame frame;
 	protected BaseCharacter[] characters;
-	protected Animation animation;
 	
 	// Constructors
 	BasePhase (JFrame frame) {

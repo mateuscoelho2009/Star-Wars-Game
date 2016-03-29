@@ -1,15 +1,13 @@
 package Enviroment;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
+import Common.Sprite;
 import IIIEpisode.BaseCharacter;
 
-public abstract class EnviromentBase {
+public abstract class EnviromentBase extends Sprite {
 	// Attributes
 	BufferedImage[] scenary;
 	

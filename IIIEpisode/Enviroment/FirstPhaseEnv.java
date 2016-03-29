@@ -1,9 +1,6 @@
 package Enviroment;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +9,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import Common.Animation;
-import IIIEpisode.BaseCharacter;
-import IIIEpisode.Ken;
 
 public class FirstPhaseEnv extends BasePhase {	
 	// Constructor
@@ -41,7 +36,7 @@ public class FirstPhaseEnv extends BasePhase {
 		animation.start();
 	}
 	
-	private void loadImage (String imageName) {
+	protected void loadImage (String imageName) {
 		BufferedImage bigImg = null;
 		
 		try {
