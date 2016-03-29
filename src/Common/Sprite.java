@@ -38,6 +38,8 @@ public abstract class Sprite {
     }
     
     public Sprite() {
+    	position = new float[2];
+    	
     	position[X] = 0;
         position[Y] = 0;
         vis = true;

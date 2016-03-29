@@ -13,6 +13,8 @@ public abstract class EnviromentBase extends Sprite {
 	
 	// Constructors
 	EnviromentBase () {
+		super ();
+		
 		initEnviroment();
 	}
 	
