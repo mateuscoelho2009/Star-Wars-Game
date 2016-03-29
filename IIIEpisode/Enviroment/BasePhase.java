@@ -9,35 +9,32 @@ import javax.swing.JFrame;
 import IIIEpisode.BaseCharacter;
 import IIIEpisode.Ken;
 
-public class FirstPhaseEnv extends EnviromentBase {
+public class BasePhase extends EnviromentBase {
 	// Scenery Constants
-	final int FLOOR_Y = 70;
-	final int HORIZ_TOLERANCE = 20;
-	
-	final float GRAV = 9.87f,
-				PIXEL_PROPORTION = 0.04F;
-	
+	final protected int FLOOR_Y = 70;
+	final protected int HORIZ_TOLERANCE = 20;
+		
+	final protected float GRAV = 9.87f,
+						  PIXEL_PROPORTION = 0.04F;
+		
 	// Attributes
-	private JFrame frame;
-	private BaseCharacter[] characters;
+	protected JFrame frame;
+	protected BaseCharacter[] characters;
 	
-	// Constructor
-	/*
-	 * TODO: Make this constructor depends on the type of the
-	 * character that was asked to be constructed.
-	 */
-	public FirstPhaseEnv(JFrame frame) {
+	// Constructors
+	BasePhase (JFrame frame) {
 		this.frame = frame;
 		
 		// initEnviroment();
 	}
+	
 
 	// Methods
 	@Override
 	protected void initEnviroment() {
 		characters = new BaseCharacter[2];
 		
-		characters[0] = new Ken(this, 500, 500);
+		characters[0] = new Ken(this, 50, 500);
 		characters[1] = new Ken(this, 50, 100);
 	}
 
@@ -45,33 +42,35 @@ public class FirstPhaseEnv extends EnviromentBase {
 	public void doDrawing (Graphics2D g) {
 		int length_ = characters.length;
 		
-        for (int i = 0; i < length_; i++) {
-        	BaseCharacter bc = characters[i];
-        	float[] pos = bc.getPosition();
-        	
-        	g.drawImage(bc.getImage(), (int) pos[0], (int) pos[1], frame);
-        }
+	    for (int i = 0; i < length_; i++) {
+	      	BaseCharacter bc = characters[i];
+	       	float[] pos = bc.getPosition();
+	       	
+	       	g.drawImage(bc.getImage(), (int) pos[0], (int) pos[1], frame);
+	    }
 	}
-	
+		
 	@Override
 	public void update () {
 		int length_ = characters.length;
 		
 		for (int i = 0; i < length_; i++) {
-        	characters[i].update();
-        }
+	       	characters[i].update();
+	    }
 	}
-	
+		
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 		characters[0].keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		characters[0].keyReleased(e);
 	}
-	
+		
 	/*
 	 * 
 	 */
@@ -91,47 +90,47 @@ public class FirstPhaseEnv extends EnviromentBase {
 	@Override
 	public boolean checkEnviromentCollisionY (BaseCharacter bc) {
 		boolean cEnvCol = checkFloorCollision (bc);
-		
+			
 		return cEnvCol;
 	}
-	
+		
 	private boolean checkFloorCollision(BaseCharacter bc) {
 		Rectangle bounds = bc.getBounds();
 		float[] velocity = bc.getVelocity();
-		
+			
 		return (bounds.getMaxY() >= getFloorHeight()) && (velocity[1] > 0);
 	}
-	
+		
 	@Override
 	public boolean checkEnviromentRightCollisionX (BaseCharacter bc) {
 		float[] vel = bc.getVelocity();
 		Rectangle bounds = bc.getBounds();
-		
-		return (vel[0] >= 0) && (bounds.getMaxX() >= getRightWall());
+			
+		return (vel[0] > 0) && (bounds.getMaxX() >= getRightWall());
 	}
-	
+		
 	@Override
 	public boolean checkEnviromentLeftCollisionX (BaseCharacter bc) {
 		float[] vel = bc.getVelocity();
 		
-		return (vel[0] <= 0) && (bc.getPosition()[0] <= getLeftWall());
+		return (vel[0] < 0) && (bc.getPosition()[0] <= getLeftWall());
 	}
-	
+		
 	@Override
 	public float getFloorHeight () {
 		return frame.getHeight() - FLOOR_Y;
 	}
-	
+		
 	@Override
 	public float getLeftWall () {
 		return HORIZ_TOLERANCE;
 	}
-	
+		
 	@Override
 	public float getRightWall () {
 		return frame.getWidth() - HORIZ_TOLERANCE;
 	}
-	
+		
 	@Override
 	public float getAllPlayersInteraction (BaseCharacter bc) {
 		float position = 0f;
@@ -151,7 +150,6 @@ public class FirstPhaseEnv extends EnviromentBase {
 	@Override
 	public float getPlayersInteraction (BaseCharacter gP, BaseCharacter pP) {
 		// First is the player who suffers the force.
-		// If position is negative, then there is no need to adjust players positions.
 		float position = -1f;
 		
 		Rectangle gBounds = gP.getBounds(),

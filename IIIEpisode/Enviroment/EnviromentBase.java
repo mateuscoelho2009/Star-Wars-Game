@@ -32,4 +32,12 @@ public abstract class EnviromentBase {
 	abstract public float getFloorHeight ();
 	abstract public float getLeftWall ();
 	abstract public float getRightWall ();
+	
+	abstract public float getAllPlayersInteraction (BaseCharacter bc);
+	public float getPlayersInteraction (BaseCharacter gP, BaseCharacter pP) {
+		// First is the player who suffers the force.
+		float velocity = 0f;
+		
+		return velocity;
+	}
 }

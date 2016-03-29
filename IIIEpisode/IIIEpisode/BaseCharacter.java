@@ -131,6 +131,11 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	}
 	
 	private void move() {
+		float pos = enviroment.getAllPlayersInteraction(this);
+		if (pos >= 0) {
+			position[X] = pos;
+		}
+		
 		float floorHeight = enviroment.getFloorHeight () - getImage().getHeight();
 		
 		if (position[Y] < floorHeight && velocity[Y] <= 0)
@@ -165,6 +170,8 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 	}
+	
+	
 	
 	public abstract void keyPressed(KeyEvent e);
 	public abstract void keyReleased(KeyEvent e);
