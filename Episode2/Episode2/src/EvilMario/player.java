@@ -7,13 +7,20 @@ import javax.swing.ImageIcon;
 
 public class player {
 	int counter = 0;
+	int time = 0;
 	static int limit = 4;
-    int x, dx, y, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
+	static int gravity = 1;
+	static int down = 285;
+    int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
     Image player;                                                                                //The player variable
-    ImageIcon playerFacingLeft = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
-    ImageIcon playerFacingRight = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
-    ImageIcon playerWalkingLeft = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingLeft.png");
-    ImageIcon playerWalkingRight = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingRight.png");
+    ImageIcon playerFacingLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
+    ImageIcon playerFacingRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
+    ImageIcon playerWalkingLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingLeft.png");
+    ImageIcon playerWalkingRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingRight.png");
+    ImageIcon playerPrepairUpLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukePrepairUpLeft.png");
+    ImageIcon playerUpLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeUpLeft.png");
+    ImageIcon playerPrepairUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukePrepairUpRight.png");
+    ImageIcon playerUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeUpRight.png");
     
         public player() {
             player = playerFacingRight.getImage();                                               //Give the player the image
@@ -41,7 +48,6 @@ public class player {
                 nx = nx+(dx*(int)0.5);                                                           //Place the background at a slower speed since Mario stops moving
                 nx2 = nx2+(dx*(int)0.5);                                                         //Place the background at a slower speed since Mario stops moving
             }
-            if(dx>0)distanceTraveled++;else if(dx<0)distanceTraveled--;
             if(distanceTraveled>104)x=299;
             if(x==1 && dx<0)
                 distanceTraveled++;
@@ -51,29 +57,47 @@ public class player {
             }
             if (dx > 0){
             	counter++;
-            	System.out.println(counter%(limit+1));
-            	if (player == playerFacingRight.getImage() && counter%(limit+1) == limit)
+            	if (player == playerFacingRight.getImage() && counter%(limit+1) == limit){
+            		distanceTraveled++;
             		player = playerWalkingRight.getImage();
-            	else if (player == playerWalkingRight.getImage() && counter%(limit+1) == limit)
+            	}
+            	else if (player == playerWalkingRight.getImage() && counter%(limit+1) == limit){
+            		distanceTraveled--;
             		player = playerFacingRight.getImage();
+            	}
             }
             else if (dx < 0){
             	counter++;
-            	System.out.println(counter%(limit+1));
             	if (player == playerFacingLeft.getImage() && counter%(limit+1) == limit)
             		player = playerWalkingLeft.getImage();
             	else if (player == playerWalkingLeft.getImage() && counter%(limit+1) == limit)
             		player = playerFacingLeft.getImage();
             }
         }
-        public void jump() {}
+        
+        public void jump() {
+        	System.out.println(y);
+        	if (y>0 && y<=285){
+        		time++;
+        		System.out.println(y);
+        		y = y + dy + gravity*time;
+        		System.out.println(y);
+        		if(player == playerPrepairUpLeft.getImage())
+            		player = playerUpLeft.getImage();
+            	else if(player == playerPrepairUpRight.getImage())
+            		player = playerUpRight.getImage();
+        	}
+        	if (y > 285){
+        		y = 285;
+        	}
+        }
         
         public int   getX()     { return x;      }                                               //This method will return the x.      Is used by other classes
         public int   getY()     { return y;      }                                               //This method will return the y.      Is used by other classes
         public Image getImage() { return player; }                                               //This method will return the player. Is used by other classes
 
         public void keyPressed(KeyEvent e) {                                                     //Called from the board class, the argument is whatever key was pressed
-            int key = e.getKeyCode();                                                            //The key originally sent from the board class
+            int key = e.getKeyCode();
             if (key == KeyEvent.VK_LEFT) {
             	player = playerWalkingLeft.getImage();
             	if(distanceTraveled<104)dx=-3;else dx=-2;
@@ -82,6 +106,21 @@ public class player {
             if(key == KeyEvent.VK_RIGHT) { 
             	player = playerWalkingRight.getImage();
             	if(distanceTraveled<104)dx=3;else dx=2;
+            }
+            if (key == KeyEvent.VK_UP){
+            	time = 0;
+            	if(player == playerWalkingLeft.getImage() || player == playerFacingLeft.getImage()){
+            		player = playerPrepairUpLeft.getImage();
+            		y = down;
+            	}
+            	else if(player == playerWalkingRight.getImage() || player == playerFacingRight.getImage()){
+            		player = playerPrepairUpRight.getImage();
+            		y = down;
+            	}
+            	if (y >= 142)
+            		dy = -15;
+            	else
+            		dy=0;
             }
         }
         public void keyReleased(KeyEvent e) {                                                    //Called from the board class, the argument is whatever key was released
