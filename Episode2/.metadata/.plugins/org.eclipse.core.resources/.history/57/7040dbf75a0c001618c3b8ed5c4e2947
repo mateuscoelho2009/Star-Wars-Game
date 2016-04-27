@@ -60,17 +60,17 @@ public class player {
             }
             if (dx > 0){
             	counter++;
-        		distanceTraveled++;
             	if (player == playerFacingRight.getImage() && counter%(limit+1) == limit){
+            		distanceTraveled++;
             		player = playerWalkingRight.getImage();
             	}
             	else if (player == playerWalkingRight.getImage() && counter%(limit+1) == limit){
+            		distanceTraveled--;
             		player = playerFacingRight.getImage();
             	}
             }
             else if (dx < 0){
             	counter++;
-        		distanceTraveled--;
             	if (player == playerFacingLeft.getImage() && counter%(limit+1) == limit)
             		player = playerWalkingLeft.getImage();
             	else if (player == playerWalkingLeft.getImage() && counter%(limit+1) == limit)
@@ -83,6 +83,7 @@ public class player {
         	if (y>0 && y<=285){
         		counter++;
         		time++;
+        		System.out.println(y);
         		y = y + dy + gravity*time;
         		System.out.println(y);
         		if(player == playerPrepairUpLeft.getImage() && counter%(limit2+1) == limit2)

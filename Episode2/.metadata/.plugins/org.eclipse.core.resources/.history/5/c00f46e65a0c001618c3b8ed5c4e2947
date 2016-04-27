@@ -25,7 +25,7 @@ public class board extends JPanel implements ActionListener {
                 setFocusable(true);                                                                                                                  //Allows movement         
                 ImageIcon i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Menu.jpeg");                  //Image for menu
                 menuBg = i.getImage();
-                i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Background.jpg");  //Image for background
+                i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Background.png");  //Image for background
                 background = i.getImage();                                                           //Give the background the image
                 time = new Timer(20,this);                                                           //Timer set to update "this" class every 20 milliseconds(Approximately 50fps)
                 time.start();                                                                        //Actually start the timer
