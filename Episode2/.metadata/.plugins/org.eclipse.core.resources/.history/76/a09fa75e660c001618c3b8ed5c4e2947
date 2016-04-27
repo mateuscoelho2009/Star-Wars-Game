@@ -84,6 +84,7 @@ public class player {
         		counter++;
         		time++;
         		y = y + dy + gravity*time;
+        		System.out.println(y);
         		if(player == playerPrepairUpLeft.getImage() && counter%(limit2+1) == limit2)
             		player = playerUpLeft.getImage();
             	else if(player == playerPrepairUpRight.getImage() && counter%(limit2+1) == limit2)
@@ -108,7 +109,7 @@ public class player {
             	if(distanceTraveled<104)dx=-3;else dx=-2;
             }
 
-            if(key == KeyEvent.VK_RIGHT) {
+            if(key == KeyEvent.VK_RIGHT) { 
             	player = playerWalkingRight.getImage();
             	if(distanceTraveled<104)dx=3;else dx=2;
             }

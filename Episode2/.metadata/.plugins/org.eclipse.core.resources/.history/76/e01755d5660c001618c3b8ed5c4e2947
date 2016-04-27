@@ -103,6 +103,7 @@ public class player {
 
         public void keyPressed(KeyEvent e) {                                                     //Called from the board class, the argument is whatever key was pressed
             int key = e.getKeyCode();
+            counter = 0;
             if (key == KeyEvent.VK_LEFT) {
             	player = playerWalkingLeft.getImage();
             	if(distanceTraveled<104)dx=-3;else dx=-2;

@@ -19,7 +19,7 @@ public class menu {
         Font fnt2 = new Font("arial", Font.BOLD, 15);
         g.setFont(fnt0);
         g.setColor(Color.white);
-        g.drawString("Super Luke Bros", 10, 40);
+        g.drawString("EvilMario", 10, 40);
 
         g.setFont(fnt1);
         g.drawString("Play", playButton.x + 19, playButton.y + 29);
