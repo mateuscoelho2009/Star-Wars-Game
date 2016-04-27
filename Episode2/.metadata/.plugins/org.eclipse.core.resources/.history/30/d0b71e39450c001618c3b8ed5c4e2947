@@ -1,0 +1,124 @@
+package EvilMario;                                                                               //Include this class in the EvilMario game package
+
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
+
+public class player {
+	static int delay = 100;
+    int x, dx, y, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
+    Image player;                                                                                //The player variable
+    ImageIcon playerFacingLeft = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
+    ImageIcon playerFacingRight = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
+    ImageIcon playerWalkingLeft = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingLeft.png");
+    ImageIcon playerWalkingRight = new     ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingRight.png");
+    
+        public player() {
+            player = playerFacingRight.getImage();                                               //Give the player the image
+            x = 75;                                                                              //The original x position of the player
+            y = 285;                                                                             //The original y position of the player
+            nx = -0;                                                                             //Repeating background 1
+            nx2 = -575;                                                                          //Repeating background 2
+            distanceTraveled = 24;
+        }
+
+        public void move() {
+            if(x>0 && x<300) {                                                                   //If the player is within the moving area
+                x = x+dx;                                                                        //The x position is updated to become itself+the amount you moved
+                nx = nx+dx;                                                                      //Place the repeating background at regular speed
+                nx2 = nx2+dx;                                                                    //Place the repeating background at regular speed
+            }
+            if(x<=0) {                                                                           //If the player has reached he very left side of the screen(0px)
+                x=1;                                                                             //Move him up a pixel so he can move again
+                nx = nx+(dx*(int)0.5);                                                           //Place the background at a slower speed since Mario stops moving
+                nx2 = nx2+(dx*(int)0.5);                                                         //Place the background at a slower speed since Mario stops moving
+            }
+            if(x>=300) {                                                                         //If the player has reached the center of the screen(300px)
+                x=299;                                                                           //Move him down a pixel so he can move again
+                nx = nx+(dx*(int)0.5);                                                           //Place the background at a slower speed since Mario stops moving
+                nx2 = nx2+(dx*(int)0.5);                                                         //Place the background at a slower speed since Mario stops moving
+            }
+            if(dx>0)distanceTraveled++;else if(dx<0)distanceTraveled--;
+            if(distanceTraveled>104)x=299;
+            if(x==1 && dx<0)
+                distanceTraveled++;
+            if(distanceTraveled<104){
+                nx=0;
+                nx2=-575;
+            }
+        }
+        public void jump() {}
+        
+        public void walking(String side, KeyEvent e) {
+        	int i = 1;
+        	int ID = e.getID();
+        	
+        	while(ID == KeyEvent.KEY_PRESSED){
+	        	if(side == "left") {
+	                if (i == 0)	{
+	                	player = playerFacingLeft.getImage();
+	                	if(distanceTraveled<104)dx=-3;else dx=-2;
+	                	i = 1;
+	                }
+	                else{
+	                	player = playerWalkingLeft.getImage();
+	                	if(distanceTraveled<104)dx=-3;else dx=-2;
+	                	i = 0;
+	                }
+	                try {
+	                	Thread.sleep(delay);
+	                } catch(InterruptedException ex) {
+	                	Thread.currentThread().interrupt();
+	                }
+	        	}
+	        	else if(side == "right"){
+	                if (i == 0)	{
+	                	player = playerFacingRight.getImage();
+	                	if(distanceTraveled<104)dx=3;else dx=2;
+	                	i = 1;
+	                }
+	                else{
+	                	player = playerWalkingRight.getImage();
+	                	if(distanceTraveled<104)dx=3;else dx=2;
+	                	i = 0;
+	                }
+	                try {
+	                	Thread.sleep(delay);
+	                } catch(InterruptedException ex) {
+	                	Thread.currentThread().interrupt();
+	                }
+	        	}
+	        	ID = 402;
+	        	System.out.println(ID);
+	           }
+       }
+        
+        public int   getX()     { return x;      }                                               //This method will return the x.      Is used by other classes
+        public int   getY()     { return y;      }                                               //This method will return the y.      Is used by other classes
+        public Image getImage() { return player; }                                               //This method will return the player. Is used by other classes
+
+        public void keyPressed(KeyEvent e) {                                                     //Called from the board class, the argument is whatever key was pressed
+            int key = e.getKeyCode();                                                            //The key originally sent from the board class
+            
+            if (key == KeyEvent.VK_LEFT) {                                                    //If the key sent was LEFT
+            	walking("left",e);
+            }
+
+            if(key == KeyEvent.VK_RIGHT) {                                                       //If the key sent was RIGHT
+                walking("right",e);	
+            }
+        }
+        public void keyReleased(KeyEvent e) {                                                    //Called from the board class, the argument is whatever key was released
+            int key = e.getKeyCode();                                                           //The key originally sent from the board class
+
+           if(key == KeyEvent.VK_LEFT ) {                             //If the left or right key was released
+               player = playerFacingLeft.getImage();
+           	dx = 0;   
+           }
+           else if(key == KeyEvent.VK_RIGHT){
+               player = playerFacingRight.getImage();
+           	dx = 0; 
+           }
+       }
+}
