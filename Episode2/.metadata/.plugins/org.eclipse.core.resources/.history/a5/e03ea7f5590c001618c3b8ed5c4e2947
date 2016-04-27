@@ -9,7 +9,7 @@ public class player {
 	int counter = 0;
 	int time = 0;
 	static int limit = 4;
-	static int limit2 = 3;
+	static int limit2 = 5;
 	static int gravity = 1;
 	static int down = 285;
     int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled

@@ -9,7 +9,7 @@ public class player {
 	int counter = 0;
 	int time = 0;
 	static int limit = 4;
-	static int limit2 = 3;
+	static int limit2 = 5;
 	static int gravity = 1;
 	static int down = 285;
     int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
@@ -91,11 +91,8 @@ public class player {
             	else if(player == playerPrepairUpRight.getImage() && counter%(limit2+1) == limit2)
             		player = playerUpRight.getImage();
         	}
-        	if (y > 285 && player != playerDownLeft.getImage() && player != playerDownRight.getImage()){
+        	if (y > 285){
         		y = 285;
-        	}
-        	else if (player == playerDownLeft.getImage() || player == playerDownRight.getImage()){
-        		y = 299;
         	}
         }
         
@@ -138,7 +135,6 @@ public class player {
             		player = playerDownRight.getImage();
             		y = down;
             	}
-            	y = y+14;
             }
         }
         public void keyReleased(KeyEvent e) {                                                    //Called from the board class, the argument is whatever key was released
@@ -162,7 +158,6 @@ public class player {
         		   player = playerFacingLeft.getImage();
         	   else if(player == playerDownRight.getImage())
         		   player = playerFacingRight.getImage();
-        	   y = 285;
            }
        }
 }

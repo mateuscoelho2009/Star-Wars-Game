@@ -9,7 +9,6 @@ public class player {
 	int counter = 0;
 	int time = 0;
 	static int limit = 4;
-	static int limit2 = 3;
 	static int gravity = 1;
 	static int down = 285;
     int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
@@ -23,7 +22,7 @@ public class player {
     ImageIcon playerPrepairUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukePrepairUpRight.png");
     ImageIcon playerUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeUpRight.png");
     ImageIcon playerDownLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeDownLeft.png");
-    ImageIcon playerDownRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeDownRight.png");
+    ImageIcon playerDownRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeDownRigth.png");
     
         public player() {
             player = playerFacingRight.getImage();                                               //Give the player the image
@@ -79,23 +78,20 @@ public class player {
         }
         
         public void jump() {
-
+        	System.out.println(y);
         	if (y>0 && y<=285){
         		counter++;
         		time++;
         		System.out.println(y);
         		y = y + dy + gravity*time;
         		System.out.println(y);
-        		if(player == playerPrepairUpLeft.getImage() && counter%(limit2+1) == limit2)
+        		if(player == playerPrepairUpLeft.getImage() && counter%(limit+1) == limit)
             		player = playerUpLeft.getImage();
-            	else if(player == playerPrepairUpRight.getImage() && counter%(limit2+1) == limit2)
+            	else if(player == playerPrepairUpRight.getImage() && counter%(limit+1) == limit)
             		player = playerUpRight.getImage();
         	}
-        	if (y > 285 && player != playerDownLeft.getImage() && player != playerDownRight.getImage()){
+        	if (y > 285){
         		y = 285;
-        	}
-        	else if (player == playerDownLeft.getImage() || player == playerDownRight.getImage()){
-        		y = 299;
         	}
         }
         
@@ -129,17 +125,6 @@ public class player {
             	else
             		dy=0;
             }
-            if (key == KeyEvent.VK_DOWN){
-            	if(player == playerWalkingLeft.getImage() || player == playerFacingLeft.getImage()){
-            		player = playerDownLeft.getImage();
-            		y = down;
-            	}
-            	else if(player == playerWalkingRight.getImage() || player == playerFacingRight.getImage()){
-            		player = playerDownRight.getImage();
-            		y = down;
-            	}
-            	y = y+14;
-            }
         }
         public void keyReleased(KeyEvent e) {                                                    //Called from the board class, the argument is whatever key was released
            int key = e.getKeyCode();                                                           //The key originally sent from the board class
@@ -153,16 +138,9 @@ public class player {
            }
            else if(key == KeyEvent.VK_UP){
         	   if(player == playerUpLeft.getImage())
-        		   player = playerFacingLeft.getImage();
-        	   else if(player == playerUpRight.getImage())
-        		   player = playerFacingRight.getImage();
-           }
-           else if(key == KeyEvent.VK_DOWN){
-        	   if(player == playerDownLeft.getImage())
-        		   player = playerFacingLeft.getImage();
-        	   else if(player == playerDownRight.getImage())
-        		   player = playerFacingRight.getImage();
-        	   y = 285;
+           		player = playerFacingLeft.getImage();
+           	else if(player == playerUpRight.getImage())
+           		player = playerFacingRight.getImage();
            }
        }
 }
