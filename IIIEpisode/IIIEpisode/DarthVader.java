@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 import Attacks.SimpleAttack;
 import Common.Animation;
 import Enviroment.EnviromentBase;
+import IA.BasicArtificialInteligence;
+import IA.BasicArtificialInteligence.ActionDecision;
 
 public class DarthVader extends BaseCharacter {
 	private static final int MAX_HEALTH_POINTS = 500;
@@ -30,6 +32,8 @@ public class DarthVader extends BaseCharacter {
 					  deadAnimation;
 	
 	private boolean hasOwnIntelligence;
+	
+	private BasicArtificialInteligence BAInteligence;
 	
 	// Constructor
 	public DarthVader (EnviromentBase enviroment, int x, int y, State initialState) {
@@ -115,6 +119,8 @@ public class DarthVader extends BaseCharacter {
 		
 		hasOwnIntelligence = isCPU;
 		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
+		
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
 		power = 30;
@@ -134,6 +140,8 @@ public class DarthVader extends BaseCharacter {
 		}
 		
 		hasOwnIntelligence = false;
+		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
@@ -155,6 +163,8 @@ public class DarthVader extends BaseCharacter {
 		
 		hasOwnIntelligence = isCPU;
 		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
+		
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
 		power = 50;
@@ -174,6 +184,8 @@ public class DarthVader extends BaseCharacter {
 		}
 		
 		hasOwnIntelligence = false;
+		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
 		mass = 100;
 		life = MAX_HEALTH_POINTS;
@@ -422,6 +434,10 @@ public class DarthVader extends BaseCharacter {
 	public boolean update () {
 		boolean died = super.update();
 		
+		if (hasOwnIntelligence) {
+			Act(BAInteligence.Decide());
+		}
+		
 		if (died) {
 			BufferedImage prevImage = animation.getSprite();
 			
@@ -455,6 +471,10 @@ public class DarthVader extends BaseCharacter {
 		return died;
 	}
 	
+	private void Act(ActionDecision decide) {
+		
+	}
+
 	private void atuAnimation () {
 		if (!animation.Completed()) {
 			return;
