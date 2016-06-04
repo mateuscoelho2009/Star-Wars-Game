@@ -15,7 +15,7 @@ import Enviroment.EnviromentBase;
  */
 public abstract class BaseCharacter extends Sprite implements Common.HasMoveset , UserControlled {
 	// Constants
-	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2, DAMAGE };
+	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2, DAMAGE, DUCKING, DEAD, DYING };
 	public enum Orientation { RIGHT, LEFT };
 	
 	// Attributes
@@ -186,7 +186,9 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		if (!animation.Completed())
 			return;
 		
-		if (position[Y] < floorHeight && velocity[Y] <= 0)
+		if (charState == State.DUCKING || charState == State.MOVE2)
+			charState = State.DUCKING;
+		else if (position[Y] < floorHeight && velocity[Y] <= 0)
 			charState = State.AIRRISING;
 		else if (position[Y] < floorHeight)
 			charState = State.AIRFALLING;

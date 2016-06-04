@@ -23,7 +23,11 @@ public class DarthVader extends BaseCharacter {
 					  walkingLeft,
 					  blocking,
 					  attack1,
-					  jumping;
+					  jumping,
+					  attack2,
+					  ducking,
+					  dying,
+					  deadAnimation;
 	
 	private boolean hasOwnIntelligence;
 	
@@ -164,6 +168,7 @@ public class DarthVader extends BaseCharacter {
 	private void initVader (float[] hpPos) {
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
+			loadImage(strPath);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -185,68 +190,17 @@ public class DarthVader extends BaseCharacter {
 		BufferedImage bigImg = null, aux = null;
 		double scale = 0.45;
 		
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\andando\\star wars fight-13.png"));
-    		
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\andando\\star wars fight-13.png");
-    		System.exit(0);
-    	}
+		bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-13.png", scale);
     	
     	BufferedImage[] standVector = new BufferedImage[3];
     	
     	standVector[0] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png", scale);
     	
     	standVector[1] = bigImg; 
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png", scale);
     	
     	standVector[2] = bigImg;
     	
@@ -254,67 +208,16 @@ public class DarthVader extends BaseCharacter {
     	
     	BufferedImage[] walkingLeftVector = new BufferedImage[4];
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\andando\\star wars fight-13.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\andando\\star wars fight-13.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-13.png", scale);
     	
     	walkingLeftVector[0] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\andando\\star wars fight-14.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\andando\\star wars fight-14.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-14.png", scale);
     	
     	walkingLeftVector[1] = bigImg;
     	walkingLeftVector[3] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\andando\\star wars fight-15.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\andando\\star wars fight-15.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-15.png", scale);
     	
     	walkingLeftVector[2] = bigImg;
     	
@@ -322,131 +225,28 @@ public class DarthVader extends BaseCharacter {
     	
     	BufferedImage[] blockingVector = new BufferedImage[1];
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\forca e defesa\\star wars fight-21.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\força e defesa\\star wars fight-21.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\forca e defesa\\star wars fight-21.png", scale);
     	
     	blockingVector[0] = bigImg;
     	
     	BufferedImage[] attack1Vector = new BufferedImage[5];
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\golpe\\star wars fight-16.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\golpe\\star wars fight-16.png");
-    		System.exit(0);
-    	}
-    	
+    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-17.png", scale);
     	attack1Vector[0] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\golpe\\star wars fight-17.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\golpe\\star wars fight-17.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-18.png", scale);
     	
     	attack1Vector[1] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\golpe\\star wars fight-18.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\golpe\\star wars fight-18.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-19.png", scale);
     	
     	attack1Vector[2] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\golpe\\star wars fight-19.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\golpe\\star wars fight-19.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-20.png", scale);
     	
     	attack1Vector[3] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\golpe\\star wars fight-20.png"));
-    		
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\golpe\\star wars fight-20.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-16.png", scale);
     	
     	attack1Vector[4] = bigImg;
     	
@@ -455,240 +255,98 @@ public class DarthVader extends BaseCharacter {
     	//
     	BufferedImage[] jumpingVector = new BufferedImage[12];
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado01.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado01.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado01.png", scale);
     	
     	jumpingVector[0] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png", scale);
     	
     	jumpingVector[1] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado03.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado03.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado03.png", scale);
     	
     	jumpingVector[2] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado04.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado04.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado04.png", scale);
     	
     	jumpingVector[3] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado05.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado05.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado05.png", scale);
     	
     	jumpingVector[4] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado06.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado06.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado06.png", scale);
     	
     	jumpingVector[5] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado07.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado07.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado07.png", scale);
     	
     	jumpingVector[6] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado08.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado08.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado08.png", scale);
     	
     	jumpingVector[7] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado09.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado09.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado09.png", scale);
     	
     	jumpingVector[8] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado10.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado10.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado10.png", scale);
     	
     	jumpingVector[9] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado11.png"));
-
-    		// Resize
-    		aux = new BufferedImage(
-    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
-    		Graphics2D graphics2D = aux.createGraphics();
-    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
-    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    		graphics2D.drawImage(bigImg, xform, null);
-    		graphics2D.dispose();
-    		
-    		bigImg = aux;
-    	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado11.png");
-    		System.exit(0);
-    	}
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado11.png", scale);
     	
     	jumpingVector[10] = bigImg;
     	
-    	try {
-    		bigImg = ImageIO.read(new File(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png"));
-
+    	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png", scale);
+    	
+    	jumpingVector[11] = bigImg;
+    	
+    	jumping = new Animation(jumpingVector, 6, true);
+    	
+    	BufferedImage[] duckingVector = new BufferedImage[1];
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
+    	
+    	duckingVector[0] = bigImg;
+    	
+    	ducking = new Animation(duckingVector, 10);
+    	
+    	BufferedImage[] attack2Vector = new BufferedImage[4];
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
+    	
+    	attack2Vector[0] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-23.png", scale);
+    	
+    	attack2Vector[1] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-25.png", scale);
+    	
+    	attack2Vector[2] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-24.png", scale);
+    	
+    	attack2Vector[3] = bigImg;
+    	
+    	attack2 = new Animation(attack2Vector, 10, true);
+    	
+    	BufferedImage[] dyingVector = new BufferedImage[1];
+    	
+    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
+    	
+    	attack2Vector[0] = bigImg;
+	}
+	
+	private BufferedImage GenerateSprite (String imageName) {
+		BufferedImage bigImg = null, aux = null;
+		float scale = 1;
+		
+		try {
+    		bigImg = ImageIO.read(new File(imageName));
+    		
     		// Resize
     		aux = new BufferedImage(
     				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
@@ -701,13 +359,36 @@ public class DarthVader extends BaseCharacter {
     		
     		bigImg = aux;
     	} catch (IOException e) {
-    		System.err.println("Image not found in: " + imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png");
+    		System.err.println(imageName);
     		System.exit(0);
     	}
-    	
-    	jumpingVector[11] = bigImg;
-    	
-    	jumping = new Animation(jumpingVector, 5, true);
+		
+		return bigImg;
+	}
+	
+	private BufferedImage GenerateSprite (String imageName, double scale) {
+		BufferedImage bigImg = null, aux = null;
+		
+		try {
+    		bigImg = ImageIO.read(new File(imageName));
+    		
+    		// Resize
+    		aux = new BufferedImage(
+    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
+    		Graphics2D graphics2D = aux.createGraphics();
+    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
+    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+    		graphics2D.drawImage(bigImg, xform, null);
+    		graphics2D.dispose();
+    		
+    		bigImg = aux;
+    	} catch (IOException e) {
+    		System.err.println(imageName);
+    		System.exit(0);
+    	}
+		
+		return bigImg;
 	}
 	
 	public void update () {
@@ -759,6 +440,28 @@ public class DarthVader extends BaseCharacter {
 			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
 			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
 		}
+		else if (charState == State.DUCKING && animation != ducking) {
+			BufferedImage prevImage = animation.getSprite();
+			
+			animation.stop();
+			animation.reset();
+			animation = ducking;
+			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
+		}
+		else if (charState == State.DEAD && animation != deadAnimation) {
+			BufferedImage prevImage = animation.getSprite();
+			
+			animation.stop();
+			animation.reset();
+			animation = deadAnimation;
+			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
+		}
 	}
 	
 	private void move () {
@@ -773,11 +476,11 @@ public class DarthVader extends BaseCharacter {
 			return;
 		}
 
-        if (key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_LEFT && charState != State.DUCKING) {
         	velocity[X] = -2f;
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT && charState != State.DUCKING) {
             velocity[X] = 2f;
         }
 
@@ -795,6 +498,12 @@ public class DarthVader extends BaseCharacter {
 			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
 			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
         }
+        
+        if (key == KeyEvent.VK_DOWN &&
+        	(charState != State.AIRRISING && charState != State.AIRFALLING)) {
+        	velocity[X] = 0;
+        	charState = State.DUCKING;
+        }
 	}
 	
 	@Override
@@ -809,13 +518,22 @@ public class DarthVader extends BaseCharacter {
             velocity[X] = 0;
         }
         
+        if (key == KeyEvent.VK_DOWN) {
+            charState = State.WALKING;
+        }
+        
         if (!animation.Completed()) {
 			return;
 		}
         
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE && charState != State.DUCKING) {
         	charState = State.MOVE1;
         	Move1();
+        }
+        
+        if (key == KeyEvent.VK_SPACE && charState == State.DUCKING) {
+        	charState = State.MOVE2;
+        	Move2();
         }
 	}
 	
@@ -861,12 +579,12 @@ public class DarthVader extends BaseCharacter {
 		Rectangle damageArea;
 		
 		if (orientation == Orientation.LEFT)
-			damageArea = new Rectangle((int) (position[0] - (int) (image.getWidth() * xScale)), 
+			damageArea = new Rectangle((int) (position[0] - (int) (image.getWidth() * xScale / 2)), 
 												(int) (position[1] + (int) (image.getHeight() * yScale)),
 												(int) (image.getWidth() * xScale),
 												(int) (image.getHeight() * yScale));
 		else
-			damageArea = new Rectangle((int) (position[0] + getImage().getWidth() + (int) (image.getWidth() * xScale)), 
+			damageArea = new Rectangle((int) (position[0] + getImage().getWidth() + (int) (image.getWidth() * xScale / 2)), 
 												(int) (position[1] + (int) (image.getHeight() * yScale)),
 												(int) (image.getWidth() * xScale),
 												(int) (image.getHeight() * yScale));
@@ -886,7 +604,33 @@ public class DarthVader extends BaseCharacter {
 	@Override
 	public void Move2() {
 		// TODO Auto-generated method stub
-
+		BufferedImage image = animation.getSprite();
+		float xScale = .5f, yScale = .7f;
+		Rectangle damageArea;
+		
+		// atualize animation
+		animation.stop();
+		animation.reset();
+		animation = attack2;
+		animation.start();
+		
+		position[X] = position[X] - (image.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+		position[Y] = position[Y] - image.getHeight() + animation.getSprite().getHeight();
+		
+		image = animation.getSprite();
+		
+		if (orientation == Orientation.LEFT)
+			damageArea = new Rectangle((int) (position[0] - (int) (image.getWidth() * xScale / 2)), 
+												(int) (position[1] + (int) (image.getHeight() * yScale)),
+												(int) (image.getWidth() * xScale),
+												(int) (image.getHeight() * yScale));
+		else
+			damageArea = new Rectangle((int) (position[0] + getImage().getWidth() + (int) (image.getWidth() * xScale / 2)), 
+												(int) (position[1] + (int) (image.getHeight() * yScale)),
+												(int) (image.getWidth() * xScale),
+												(int) (image.getHeight() * yScale));
+		
+		enviroment.addNonSpriteAttack (new SimpleAttack(power, damageArea, this));
 	}
 
 	@Override
