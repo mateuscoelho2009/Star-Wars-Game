@@ -229,6 +229,8 @@ public class DarthVader extends BaseCharacter {
     	
     	blockingVector[0] = bigImg;
     	
+    	blocking = new Animation(blockingVector, 10);
+    	
     	BufferedImage[] attack1Vector = new BufferedImage[5];
     	
     	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-17.png", scale);
@@ -458,6 +460,10 @@ public class DarthVader extends BaseCharacter {
 			return;
 		}
 		
+		if (charState == State.DYING) {
+			charState = State.DEAD;
+		}
+		
 		if (charState == State.WALKING && animation != walkingLeft) {
 			BufferedImage prevImage = animation.getSprite();
 			
@@ -502,6 +508,17 @@ public class DarthVader extends BaseCharacter {
 			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
 			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
 		}
+		else if (charState == State.BLOCKING && animation != blocking) {
+			BufferedImage prevImage = animation.getSprite();
+			
+			animation.stop();
+			animation.reset();
+			animation = blocking;
+			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
+		}
 	}
 	
 	private void move () {
@@ -512,16 +529,23 @@ public class DarthVader extends BaseCharacter {
 	public void keyPressed (KeyEvent ke) {
 		int key = ke.getKeyCode();
 		
-		if (!animation.Completed()) {
+		if (!animation.Completed() || charState == State.DYING || charState == State.DEAD) {
 			return;
 		}
 
-        if (key == KeyEvent.VK_LEFT && charState != State.DUCKING) {
+        if (key == KeyEvent.VK_LEFT && (charState != State.DUCKING && charState != State.BLOCKING)) {
         	velocity[X] = -2f;
         }
 
-        if (key == KeyEvent.VK_RIGHT && charState != State.DUCKING) {
+        if (key == KeyEvent.VK_RIGHT && (charState != State.DUCKING && charState != State.BLOCKING)) {
             velocity[X] = 2f;
+        }
+        
+        if (key == KeyEvent.VK_C && 
+            (charState != State.AIRRISING && charState != State.AIRFALLING)) {
+        	velocity[X] = 0;
+        	
+        	charState = State.BLOCKING;
         }
 
         if (key == KeyEvent.VK_UP && 
@@ -540,7 +564,7 @@ public class DarthVader extends BaseCharacter {
         }
         
         if (key == KeyEvent.VK_DOWN &&
-        	(charState != State.AIRRISING && charState != State.AIRFALLING)) {
+        	(charState != State.AIRRISING && charState != State.AIRFALLING && charState != State.BLOCKING)) {
         	velocity[X] = 0;
         	charState = State.DUCKING;
         }
@@ -549,6 +573,10 @@ public class DarthVader extends BaseCharacter {
 	@Override
 	public void keyReleased (KeyEvent ke) {
 		int key = ke.getKeyCode();
+		
+		if (charState == State.DYING || charState == State.DEAD) {
+			return;
+		}
 
         if (key == KeyEvent.VK_LEFT) {
         	velocity[X] = 0;
@@ -559,8 +587,11 @@ public class DarthVader extends BaseCharacter {
         }
         
         if (key == KeyEvent.VK_DOWN) {
-            charState = State.WALKING;
+            charState = State.STOP;
         }
+        
+        if (key == KeyEvent.VK_C)
+        	charState = State.STOP;
         
         if (!animation.Completed()) {
 			return;

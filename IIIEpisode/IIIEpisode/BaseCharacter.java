@@ -145,7 +145,11 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		UpdateOrientation();
 		
 		if (damage > 0) {
-			charState = State.DAMAGE;
+			if (charState != State.BLOCKING)
+				charState = State.DAMAGE;
+			else
+				damage = damage / 2;
+			
 			died = receiveDamage(damage);
 		}
 		
@@ -155,6 +159,10 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	}
 	
 	private void UpdateOrientation () {
+		if (!animation.Completed() || charState == State.DYING || charState == State.DEAD) {
+			return;
+		}
+		
 		orientation = enviroment.getPlayerOrientation(this);
 	}
 	
@@ -178,7 +186,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 			position[X] = enviroment.getRightWall() - getImage().getWidth();
 		}
 		
-		if (charState == State.DEAD) {
+		if (charState == State.DEAD || charState == State.DYING) {
 			velocity[X] = 0;
 		}
 		
@@ -190,16 +198,18 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 		
-		if (!animation.Completed() && charState == State.DEAD)
+		if (!animation.Completed())
 			return;
 		
-		if (charState == State.DYING) {
+		if (charState == State.DYING || charState == State.DEAD) {
 			charState = State.DEAD;
 			return;
 		}
 		
 		if (charState == State.DUCKING || charState == State.MOVE2)
 			charState = State.DUCKING;
+		else if (charState == State.BLOCKING)
+			charState = State.BLOCKING;
 		else if (position[Y] < floorHeight && velocity[Y] <= 0)
 			charState = State.AIRRISING;
 		else if (position[Y] < floorHeight)
@@ -221,7 +231,6 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	protected boolean receiveDamage (float d) {
 		if (life > 0 && life < d) {
 			charState = State.DYING;
-			System.out.println("Pokemon");
 			
 			return true;
 		}
