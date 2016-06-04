@@ -14,12 +14,34 @@ public class Animation {
     private int totalFrames;                // total amount of frames for your animation
 
     private boolean stopped;                // has animations stopped
+    
+    private boolean canBeCompleted;
+    private boolean completed;              // Check if the animations were totally used.
 
     private List<Frame> frames = new ArrayList<Frame>();    // Arraylist of frames 
 
+    public Animation(BufferedImage[] frames, int frameDelay, boolean complete) {
+        this.frameDelay = frameDelay;
+        this.stopped = true;
+        this.completed = false;
+        this.canBeCompleted = complete;
+
+        for (int i = 0; i < frames.length; i++) {
+            addFrame(frames[i], frameDelay);
+        }
+
+        this.frameCount = 0;
+        this.frameDelay = frameDelay;
+        this.currentFrame = 0;
+        this.animationDirection = 1;
+        this.totalFrames = this.frames.size();
+    }
+    
     public Animation(BufferedImage[] frames, int frameDelay) {
         this.frameDelay = frameDelay;
         this.stopped = true;
+        this.completed = false;
+        this.canBeCompleted = false;
 
         for (int i = 0; i < frames.length; i++) {
             addFrame(frames[i], frameDelay);
@@ -65,6 +87,7 @@ public class Animation {
         this.stopped = true;
         this.frameCount = 0;
         this.currentFrame = 0;
+        this.completed = false;
     }
 
     private void addFrame(BufferedImage frame, int duration) {
@@ -90,12 +113,21 @@ public class Animation {
                 currentFrame += animationDirection;
 
                 if (currentFrame > totalFrames - 1) {
+                	completed = true;
                     currentFrame = 0;
                 }
                 else if (currentFrame < 0) {
+                	completed = true;
                     currentFrame = totalFrames - 1;
                 }
             }
         }
+    }
+    
+    public boolean Completed () {
+    	if (canBeCompleted)
+    		return completed;
+    	
+    	return true;
     }
 }

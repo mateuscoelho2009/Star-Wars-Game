@@ -10,6 +10,7 @@ import Attacks.NonSpriteAttack;
 import Attacks.SpriteAttack;
 import Common.Sprite;
 import IIIEpisode.BaseCharacter;
+import IIIEpisode.BaseCharacter.Orientation;
 
 public abstract class EnviromentBase extends Sprite {
 	// Attributes
@@ -48,6 +49,8 @@ public abstract class EnviromentBase extends Sprite {
 		
 		return velocity;
 	}
+	
+	abstract public Orientation getPlayerOrientation (BaseCharacter bc);
 
 	public void addNonSpriteAttack (NonSpriteAttack nsAttack) {
 		nsAttacks.add(nsAttack);

@@ -328,16 +328,16 @@ public class Ken extends BaseCharacter {
 		int key = ke.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-        	velocity[X] = -2;
+        	velocity[X] = -3;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            velocity[X] = 2;
+            velocity[X] = 3;
         }
 
         if (key == KeyEvent.VK_UP && 
         	(charState != State.AIRRISING && charState != State.AIRFALLING)) {
-            velocity[Y] = -10;
+            velocity[Y] = -12;
         }
 	}
 	
@@ -353,7 +353,7 @@ public class Ken extends BaseCharacter {
             velocity[X] = 0;
         }
         
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE) {        	
         	charState = State.MOVE1;
         	Move1();
         }
@@ -375,6 +375,16 @@ public class Ken extends BaseCharacter {
 	}
 	
 	@Override
+	public Rectangle getBounds() {
+		BufferedImage image = animation.getSprite();
+		
+        return new Rectangle((int) position[X],
+        					 (int) position[Y],
+        					 image.getWidth(),
+        					 image.getHeight());
+    }
+	
+	@Override
 	protected void initHPBar (float maxLife) {
 		hpBar = new HealthBar(maxLife);
 	}
@@ -386,7 +396,12 @@ public class Ken extends BaseCharacter {
 
 	@Override
 	public void Move1() {
-		Rectangle damageArea = new Rectangle((int) (position[0] - 10), (int) (position[1] + 10), 10, 10);
+		Rectangle damageArea;
+		
+		if (orientation == Orientation.LEFT)
+			damageArea = new Rectangle((int) (position[0] - 10), (int) (position[1] + 10), 10, 10);
+		else
+			damageArea = new Rectangle((int) (position[0] + getImage().getWidth() + 10), (int) (position[1] + 10), 10, 10);
 		
 		enviroment.addNonSpriteAttack (new SimpleAttack(power, damageArea, this));
 	}

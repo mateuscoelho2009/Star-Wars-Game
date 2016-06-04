@@ -16,7 +16,7 @@ import Enviroment.EnviromentBase;
 public abstract class BaseCharacter extends Sprite implements Common.HasMoveset , UserControlled {
 	// Constants
 	enum State { STOP, WALKING, BLOCKING, AIRRISING, AIRFALLING, MOVE1, MOVE2, DAMAGE };
-	enum Orientation { RIGHT, LEFT };
+	public enum Orientation { RIGHT, LEFT };
 	
 	// Attributes
 	protected float[] velocity,
@@ -141,12 +141,18 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	public void update () {
 		float damage = enviroment.getDamage(this);
 		
+		UpdateOrientation();
+		
 		if (damage > 0) {
 			charState = State.DAMAGE;
 			receiveDamage(damage);
 		}
 		
 		move ();
+	}
+	
+	private void UpdateOrientation () {
+		orientation = enviroment.getPlayerOrientation(this);
 	}
 	
 	private void move() {
@@ -156,15 +162,6 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		}
 		
 		float floorHeight = enviroment.getFloorHeight () - getImage().getHeight();
-		
-		if (position[Y] < floorHeight && velocity[Y] <= 0)
-			charState = State.AIRRISING;
-		else if (position[Y] < floorHeight)
-			charState = State.AIRFALLING;
-		else if (velocity[X] != 0)
-			charState = State.WALKING;
-		else
-			charState = State.STOP;
 		
 		if (enviroment.checkEnviromentCollisionY(this)) {
 			position[Y] = floorHeight;
@@ -185,6 +182,18 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
+		
+		if (!animation.Completed())
+			return;
+		
+		if (position[Y] < floorHeight && velocity[Y] <= 0)
+			charState = State.AIRRISING;
+		else if (position[Y] < floorHeight)
+			charState = State.AIRFALLING;
+		else if (velocity[X] != 0)
+			charState = State.WALKING;
+		else
+			charState = State.STOP;
 	}
 	
 	@Override

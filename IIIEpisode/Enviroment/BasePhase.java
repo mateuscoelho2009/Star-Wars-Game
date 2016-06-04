@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import Attacks.NonSpriteAttack;
 import Attacks.SpriteAttack;
 import IIIEpisode.BaseCharacter;
+import IIIEpisode.BaseCharacter.Orientation;
+import IIIEpisode.DarthVader;
 import IIIEpisode.HealthBar;
 import IIIEpisode.Ken;
 
@@ -40,8 +42,8 @@ public class BasePhase extends EnviromentBase {
 		
 		characters = new BaseCharacter[2];
 		
-		characters[0] = new Ken(this, 500, 500);
-		characters[1] = new Ken(this, 50, 500, hpPos);
+		characters[0] = new DarthVader(this, 500, 500);
+		characters[1] = new Ken(this, 100, 500, hpPos);
 		
 		sAttacks = new ArrayList<SpriteAttack>();
 		nsAttacks = new ArrayList<NonSpriteAttack>();
@@ -187,20 +189,38 @@ public class BasePhase extends EnviromentBase {
 		// First is the player who suffers the force.
 		float position = -1f;
 		
+		float[] gVel = gP.getVelocity();
+		float[] pVel = pP.getVelocity();
+		
 		Rectangle gBounds = gP.getBounds(),
 				  pBounds = pP.getBounds();
 		
-		if (gBounds.intersects(pBounds)) {			
-			if (gBounds.x < pBounds.x) {
+		if (gBounds.intersects(pBounds)) {
+			if (gBounds.x < pBounds.x && gVel[0] > pVel[0]) {
 				position = (gBounds.x + (float) pBounds.getMaxX()) / 2;
 				position -= gBounds.width;
 			}
-			else {
+			else if (gBounds.x > pBounds.x && gVel[0] < pVel[0]) {
 				position = (pBounds.x + (float) gBounds.getMaxX()) / 2;
 			}
 		}
 		
 		return position;
+	}
+	
+	@Override
+	public Orientation getPlayerOrientation (BaseCharacter bc) {
+		float bcX = bc.getX();
+		
+		for (int i = 0; i < characters.length; i++) {
+			BaseCharacter ch = characters[i];
+			
+			if (ch != bc) {
+				if (ch.getX() > bcX) return Orientation.RIGHT;
+			}
+		}
+		
+		return Orientation.LEFT;
 	}
 
 }
