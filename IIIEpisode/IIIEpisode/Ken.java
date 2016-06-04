@@ -283,8 +283,8 @@ public class Ken extends BaseCharacter {
     	walkingLeft = new Animation(walkingLeftVector, 7);
 	}
 	
-	public void update () {
-		super.update();
+	public boolean update () {
+		boolean died = super.update();
 		
 		move ();
 		
@@ -292,6 +292,8 @@ public class Ken extends BaseCharacter {
 		atuAnimation();
 		
 		animation.update();
+		
+		return died;
 	}
 	
 	private void atuAnimation () {

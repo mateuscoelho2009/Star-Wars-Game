@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import Common.Animation;
 import Common.Sprite;
+import IIIEpisode.BaseCharacter.State;
 
 public class HealthBar extends Sprite {
 	// attributes

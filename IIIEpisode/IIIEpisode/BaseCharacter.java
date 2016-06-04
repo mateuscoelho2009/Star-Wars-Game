@@ -138,17 +138,20 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		return velocity;
 	}
 	
-	public void update () {
+	public boolean update () {
 		float damage = enviroment.getDamage(this);
+		boolean died = false;
 		
 		UpdateOrientation();
 		
 		if (damage > 0) {
 			charState = State.DAMAGE;
-			receiveDamage(damage);
+			died = receiveDamage(damage);
 		}
 		
 		move ();
+		
+		return died;
 	}
 	
 	private void UpdateOrientation () {
@@ -175,6 +178,10 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 			position[X] = enviroment.getRightWall() - getImage().getWidth();
 		}
 		
+		if (charState == State.DEAD) {
+			velocity[X] = 0;
+		}
+		
 		position[X] += velocity[X];
 		position[Y] += velocity[Y];
 		
@@ -183,8 +190,13 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 		velocity[X] += acceleration[X];
 		velocity[Y] += acceleration[Y];
 		
-		if (!animation.Completed())
+		if (!animation.Completed() && charState == State.DEAD)
 			return;
+		
+		if (charState == State.DYING) {
+			charState = State.DEAD;
+			return;
+		}
 		
 		if (charState == State.DUCKING || charState == State.MOVE2)
 			charState = State.DUCKING;
@@ -206,9 +218,18 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
         					 sprites[atuSprite].getHeight());
     }
 	
-	protected void receiveDamage (float d) {
+	protected boolean receiveDamage (float d) {
+		if (life > 0 && life < d) {
+			charState = State.DYING;
+			System.out.println("Pokemon");
+			
+			return true;
+		}
+		
 		life -= d;
 		hpBar.setDamage(d);
+		
+		return false;
 	}
 	
 	abstract protected void initHPBar (float maxLife);

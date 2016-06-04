@@ -333,11 +333,37 @@ public class DarthVader extends BaseCharacter {
     	
     	attack2 = new Animation(attack2Vector, 10, true);
     	
-    	BufferedImage[] dyingVector = new BufferedImage[1];
+    	BufferedImage[] dyingVector = new BufferedImage[5];
     	
-    	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-34.png", scale);
     	
-    	attack2Vector[0] = bigImg;
+    	dyingVector[0] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-35.png", scale);
+    	
+    	dyingVector[1] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-36.png", scale);
+    	
+    	dyingVector[2] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-37.png", scale);
+    	
+    	dyingVector[3] = bigImg;
+    	
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-38.png", scale);
+    	
+    	dyingVector[4] = bigImg;
+    	
+    	dying = new Animation(dyingVector, 20, true);
+    	
+    	BufferedImage[] deadVector = new BufferedImage[1];
+    	
+    	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-38.png", scale);
+    	
+    	deadVector[0] = bigImg;
+    	
+    	deadAnimation = new Animation(deadVector, 10);
 	}
 	
 	private BufferedImage GenerateSprite (String imageName) {
@@ -391,8 +417,20 @@ public class DarthVader extends BaseCharacter {
 		return bigImg;
 	}
 	
-	public void update () {
-		super.update();
+	public boolean update () {
+		boolean died = super.update();
+		
+		if (died) {
+			BufferedImage prevImage = animation.getSprite();
+			
+			animation.stop();
+			animation.reset();
+			animation = dying;
+			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
+		}
 		
 		move ();
 		
@@ -411,6 +449,8 @@ public class DarthVader extends BaseCharacter {
 			position[X] = position[X] - (prevImage.getWidth() / 2) + atuImage.getWidth() / 2;
 			position[Y] = position[Y] - prevImage.getHeight() + atuImage.getHeight();
 		}
+		
+		return died;
 	}
 	
 	private void atuAnimation () {
