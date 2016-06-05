@@ -17,13 +17,15 @@ public class HealthBar extends Sprite {
 	float maxLife,
 		  atuLife;
 	
+	
+	
 	// Constructors
 	HealthBar (float maxLife) {
 		this.maxLife = atuLife = maxLife;
 		
 		try {
-			String strPath = System.getProperty("user.dir") + "\\src\\Images";
-			loadImage(strPath + "\\bargreen.png");
+			String strPath = System.getProperty("user.dir") + "\\Imagens";
+			loadImage(strPath + "\\DarthVader\\Board");
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -35,8 +37,8 @@ public class HealthBar extends Sprite {
 		this.position = position;
 		
 		try {
-			String strPath = System.getProperty("user.dir") + "\\src\\Images";
-			loadImage(strPath + "\\bargreen.png");
+			String strPath = System.getProperty("user.dir") + "\\Imagens";
+			loadImage(strPath + "\\DarthVader\\Board");
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -48,7 +50,7 @@ public class HealthBar extends Sprite {
 		BufferedImage bigImg = null;
 		
 		try {
-    		bigImg = ImageIO.read(new File(imageName));
+    		bigImg = ImageIO.read(new File(imageName + "\\BarraVida.png"));
     	} catch (IOException e) {
     		System.err.println("Image not found in: " + imageName);
     		System.exit(0);

@@ -7,14 +7,45 @@ public class BasicArtificialInteligence {
 	EnviromentBase enviroment;
 	BaseCharacter bc;
 	
-	public enum ActionDecision { WALKRIGHT, WALKLEFT, BLOCK, ATTACK, DUCK, NOTHING };
+	ActionDecision lastDecision;
+	
+	public enum ActionDecision { WALKRIGHT, WALKLEFT, BLOCK, ATTACK, DUCK, NOTHING, JUMP };
 	
 	public BasicArtificialInteligence(BaseCharacter bc, EnviromentBase enviroment) {
 		this.bc = bc;
 		this.enviroment = enviroment;
+		
+		lastDecision = ActionDecision.NOTHING;
 	}
 	
 	public ActionDecision Decide () {
+		float[] otherPos = enviroment.getOtherPlayerPosition(bc);
+		
+		if (enviroment.DeadPlayerExist()) {
+			return ActionDecision.NOTHING;
+		}
+		
+		double rand = Math.random();
+		
+		if (otherPos[0] > bc.getX() && rand < 0.6)
+			return ActionDecision.WALKRIGHT;
+		else if (rand < .6)
+			return ActionDecision.WALKLEFT;
+		
+		rand = Math.random();
+		
+		if (Math.abs(bc.getX() - otherPos[0]) < 100 && rand < .6)
+			return ActionDecision.ATTACK;
+		else if (Math.abs(bc.getX() - otherPos[0]) < 100 && Math.random() < .6)
+			return ActionDecision.BLOCK;
+		
+		rand = Math.random();
+		
+		if (rand < .1)
+			return ActionDecision.JUMP;
+		else if (rand > .9)
+			return ActionDecision.DUCK;
+		
 		return ActionDecision.NOTHING;
 	}
 }

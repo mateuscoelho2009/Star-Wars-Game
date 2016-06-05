@@ -50,6 +50,10 @@ public abstract class EnviromentBase extends Sprite {
 		return velocity;
 	}
 	
+	abstract public float[] getOtherPlayerPosition(BaseCharacter bc);
+	
+	abstract public boolean DeadPlayerExist();
+	
 	abstract public Orientation getPlayerOrientation (BaseCharacter bc);
 
 	public void addNonSpriteAttack (NonSpriteAttack nsAttack) {

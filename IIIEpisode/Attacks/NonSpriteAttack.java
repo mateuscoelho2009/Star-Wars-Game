@@ -11,11 +11,15 @@ public abstract class NonSpriteAttack {
 	private BaseCharacter owner;
 	private boolean destroyed;
 	
+	private int counter;
+	
 	// Constructor
 	NonSpriteAttack (float damage, Rectangle damageArea, BaseCharacter bc) {
 		this.damage = damage;
 		
 		owner = bc;
+		
+		counter = 0;
 		
 		setDamageArea(damageArea);
 	}
@@ -52,5 +56,14 @@ public abstract class NonSpriteAttack {
 	
 	public boolean wasDestroyed () {
 		return destroyed;
+	}
+
+	public boolean passedOut() {
+		counter++;
+		
+		if (counter > 10)
+			return true;
+		
+		return false;
 	}
 }

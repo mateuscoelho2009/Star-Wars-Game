@@ -199,7 +199,7 @@ public class DarthVader extends BaseCharacter {
 	
 	@Override
 	protected void loadImage(String imageName) {
-		BufferedImage bigImg = null, aux = null;
+		BufferedImage bigImg = null;
 		double scale = 0.45;
 		
 		bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-13.png", scale);
@@ -210,7 +210,7 @@ public class DarthVader extends BaseCharacter {
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png", scale);
     	
-    	standVector[1] = bigImg; 
+    	standVector[1] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png", scale);
     	
@@ -243,7 +243,7 @@ public class DarthVader extends BaseCharacter {
     	
     	blocking = new Animation(blockingVector, 10);
     	
-    	BufferedImage[] attack1Vector = new BufferedImage[5];
+    	BufferedImage[] attack1Vector = new BufferedImage[4];
     	
     	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-17.png", scale);
     	attack1Vector[0] = bigImg;
@@ -260,13 +260,8 @@ public class DarthVader extends BaseCharacter {
     	
     	attack1Vector[3] = bigImg;
     	
-    	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-16.png", scale);
+    	attack1 = new Animation(attack1Vector, 14, true);
     	
-    	attack1Vector[4] = bigImg;
-    	
-    	attack1 = new Animation(attack1Vector, 10, true);
-    	
-    	//
     	BufferedImage[] jumpingVector = new BufferedImage[12];
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado01.png", scale);
@@ -345,7 +340,7 @@ public class DarthVader extends BaseCharacter {
     	
     	attack2Vector[3] = bigImg;
     	
-    	attack2 = new Animation(attack2Vector, 10, true);
+    	attack2 = new Animation(attack2Vector, 14, true);
     	
     	BufferedImage[] dyingVector = new BufferedImage[5];
     	
@@ -369,7 +364,7 @@ public class DarthVader extends BaseCharacter {
     	
     	dyingVector[4] = bigImg;
     	
-    	dying = new Animation(dyingVector, 20, true);
+    	dying = new Animation(dyingVector, 30, true);
     	
     	BufferedImage[] deadVector = new BufferedImage[1];
     	
@@ -434,11 +429,11 @@ public class DarthVader extends BaseCharacter {
 	public boolean update () {
 		boolean died = super.update();
 		
-		if (hasOwnIntelligence) {
+		if (hasOwnIntelligence && Math.random() > .92) {
 			Act(BAInteligence.Decide());
 		}
 		
-		if (died) {
+		if (died && charState != State.DEAD && charState != State.DYING) {
 			BufferedImage prevImage = animation.getSprite();
 			
 			animation.stop();
@@ -470,17 +465,13 @@ public class DarthVader extends BaseCharacter {
 		
 		return died;
 	}
-	
-	private void Act(ActionDecision decide) {
-		
-	}
 
 	private void atuAnimation () {
 		if (!animation.Completed()) {
 			return;
 		}
 		
-		if (charState == State.DYING) {
+		if (charState == State.DYING && charState == State.DEAD) {
 			charState = State.DEAD;
 		}
 		
@@ -546,6 +537,11 @@ public class DarthVader extends BaseCharacter {
 	}
 	
 	@Override
+	public boolean IsDead () {
+		return (charState == State.DEAD || charState == State.DYING);
+	}
+	
+	@Override
 	public void keyPressed (KeyEvent ke) {
 		int key = ke.getKeyCode();
 		
@@ -592,6 +588,7 @@ public class DarthVader extends BaseCharacter {
 	
 	@Override
 	public void keyReleased (KeyEvent ke) {
+
 		int key = ke.getKeyCode();
 		
 		if (charState == State.DYING || charState == State.DEAD) {
@@ -623,6 +620,75 @@ public class DarthVader extends BaseCharacter {
         }
         
         if (key == KeyEvent.VK_SPACE && charState == State.DUCKING) {
+        	charState = State.MOVE2;
+        	Move2();
+        }
+	}
+	
+	private void Act(ActionDecision decide) {
+		if (!animation.Completed() || charState == State.DYING || charState == State.DEAD) {
+			return;
+		}
+		
+		// Start doing something
+        if (decide == ActionDecision.WALKLEFT && (charState != State.DUCKING && charState != State.BLOCKING)) {
+        	velocity[X] = -2f;
+        }
+
+        if (decide == ActionDecision.WALKRIGHT && (charState != State.DUCKING && charState != State.BLOCKING)) {
+            velocity[X] = 2f;
+        }
+        
+        if (decide == ActionDecision.BLOCK && 
+            (charState != State.AIRRISING && charState != State.AIRFALLING)) {
+        	velocity[X] = 0;
+        	
+        	charState = State.BLOCKING;
+        }
+
+        if (decide == ActionDecision.JUMP && 
+        	(charState != State.AIRRISING && charState != State.AIRFALLING)) {
+            velocity[Y] = -14;
+            
+            BufferedImage prevImage = animation.getSprite();
+			
+			animation.stop();
+			animation.reset();
+			animation = jumping;
+			animation.start();
+			
+			position[X] = position[X] - (prevImage.getWidth() / 2) + animation.getSprite().getWidth() / 2;
+			position[Y] = position[Y] - prevImage.getHeight() + animation.getSprite().getHeight();
+        }
+        
+        if (decide == ActionDecision.DUCK &&
+        	(charState != State.AIRRISING && charState != State.AIRFALLING && charState != State.BLOCKING)) {
+        	velocity[X] = 0;
+        	charState = State.DUCKING;
+        }
+        
+        // Stop doing something        
+        if (decide == ActionDecision.NOTHING && charState == State.WALKING) {
+            velocity[X] = 0;
+        }
+        
+        if (decide == ActionDecision.NOTHING && charState == State.DUCKING) {
+            charState = State.STOP;
+        }
+        
+        if (decide == ActionDecision.NOTHING && charState == State.BLOCKING)
+        	charState = State.STOP;
+        
+        if (!animation.Completed()) {
+			return;
+		}
+        
+        if (decide == ActionDecision.ATTACK && charState != State.DUCKING) {
+        	charState = State.MOVE1;
+        	Move1();
+        }
+        
+        if (decide == ActionDecision.ATTACK && charState == State.DUCKING) {
         	charState = State.MOVE2;
         	Move2();
         }

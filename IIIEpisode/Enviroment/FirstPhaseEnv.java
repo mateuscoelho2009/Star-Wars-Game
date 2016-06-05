@@ -27,8 +27,8 @@ public class FirstPhaseEnv extends BasePhase {
 		super.initEnviroment();
 		
 		try {
-			String strPath = System.getProperty("user.dir") + "\\src\\Images";
-			loadImage(strPath + "\\ken-sprite-sheet.png");
+			String strPath = System.getProperty("user.dir") + "\\Imagens";
+			loadImage(strPath + "\\DarthVader\\Board\\Bkg.png");
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -48,12 +48,7 @@ public class FirstPhaseEnv extends BasePhase {
 		
 		scenary = new BufferedImage[1];
 		
-		scenary[0] = bigImg.getSubimage(
-	            30,
-	            800,
-	            380,
-	            220
-	        );
+		scenary[0] = bigImg;
 		
 		animation = new Animation(scenary, 10);
 	}

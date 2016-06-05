@@ -229,7 +229,7 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
     }
 	
 	protected boolean receiveDamage (float d) {
-		if (life > 0 && life < d) {
+		if (life < d && charState != State.DEAD && charState != State.DYING) {
 			charState = State.DYING;
 			
 			return true;
@@ -243,4 +243,8 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	
 	abstract protected void initHPBar (float maxLife);
 	abstract protected void initHPBar (float maxLife, float[] hpBar);
+	
+	public boolean IsDead () {
+		return (hpBar.atuLife <= 0);
+	}
 }

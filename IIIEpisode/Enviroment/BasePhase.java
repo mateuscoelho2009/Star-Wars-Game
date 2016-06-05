@@ -20,7 +20,7 @@ public class BasePhase extends EnviromentBase {
 	final protected int FLOOR_Y = 70;
 	final protected int HORIZ_TOLERANCE = 20;
 		
-	final protected float GRAV = 9.87f,
+	final protected float GRAV = 11f,
 						  PIXEL_PROPORTION = 0.04F;
 		
 	// Attributes
@@ -112,6 +112,10 @@ public class BasePhase extends EnviromentBase {
 				damage += nsAttack.getDamage();
 				nsAttack.destroy();
 			}
+			else {
+				if (nsAttack.passedOut())
+					nsAttack.destroy();
+			}
 		}
 		
 		for (SpriteAttack sAttack : sAttacks) {
@@ -122,6 +126,20 @@ public class BasePhase extends EnviromentBase {
 		}
 		
 		return damage;
+	};
+	
+	@Override
+	public float[] getOtherPlayerPosition (BaseCharacter bc) {
+		int length_ = characters.length;
+		
+	    for (int i = 0; i < length_; i++) {
+	      	BaseCharacter oBc = characters[i];
+	      	
+	      	if (oBc != bc)
+	      		return oBc.getPosition();
+	    }
+	    
+	    return null;
 	};
 
 	@Override
@@ -183,6 +201,16 @@ public class BasePhase extends EnviromentBase {
 		
 		return position;
 	}
+	
+	@Override
+	public boolean DeadPlayerExist() {
+		for (int i = 0; i < characters.length; i++) {
+			if (characters[i].IsDead())
+				return true;
+		}
+		
+		return false;
+	};
 	
 	@Override
 	public float getPlayersInteraction (BaseCharacter gP, BaseCharacter pP) {
