@@ -7,29 +7,32 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class menu {
-    public static Rectangle playButton = new Rectangle(10, 50, 100, 37);
-    public static Rectangle helpButton = new Rectangle(10, 102, 100, 37);
-    public static Rectangle quitButton = new Rectangle(10, 154, 100, 37);
+    public static Rectangle marioButton = new Rectangle(10, 570, 300, 37);
+    public static Rectangle streetButton = new Rectangle(325, 570, 300, 37);
+    public static Rectangle pacButton = new Rectangle(645, 570, 300, 37);
+    public static Rectangle spaceButton = new Rectangle(960, 570, 300, 37);
 
     public static void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        Font fnt0 = new Font("arial", Font.BOLD, 45);
-        Font fnt1 = new Font("arial", Font.BOLD, 30);
-        Font fnt2 = new Font("arial", Font.BOLD, 15);
+        Font fnt0 = new Font("Proxima Nova", Font.BOLD, 45);
+        Font fnt1 = new Font("Proxima Nova", Font.BOLD, 30);
+        Font fnt2 = new Font("Proxima Nova", Font.BOLD, 15);
         g.setFont(fnt0);
-        g.setColor(Color.white);
-        g.drawString("Super Luke Bros", 10, 40);
+        g.setColor(Color.WHITE);
+        //g.drawString("Ultimate Star Wars Arcade", 350, 40);
 
         g.setFont(fnt1);
-        g.drawString("Play", playButton.x + 19, playButton.y + 29);
-            g2d.draw(playButton);
-        g.drawString("Help", helpButton.x + 19, helpButton.y + 29);
-            g2d.draw(helpButton);
-        g.drawString("Quit", quitButton.x + 19, quitButton.y + 29);
-            g2d.draw(quitButton);
+        g.drawString("SUPER LUKE BROS", marioButton.x + 17, marioButton.y + 29);
+            g2d.draw(marioButton);
+        g.drawString("STAR FIGHTER", streetButton.x + 49, streetButton.y + 29);
+            g2d.draw(streetButton);
+        g.drawString("PAC WARS", pacButton.x + 73, pacButton.y + 29);
+            g2d.draw(pacButton);
+        g.drawString("SPACE WARS", spaceButton.x + 59, spaceButton.y + 29);
+            g2d.draw(spaceButton);
 
         g.setFont(fnt2);
-        g.drawString("Version 0.0.2",500,380);
+        g.drawString("VERSION 4.5.2016",1130,20);
     }
 }

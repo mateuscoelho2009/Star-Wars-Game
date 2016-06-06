@@ -5,6 +5,10 @@ import java.awt.event.*;                                                        
 
 import javax.swing.*;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class board extends JPanel implements ActionListener {
         player p;                                                                                //Instance of player class
         Image background, menuBg;                                                                //The background images
@@ -23,7 +27,7 @@ public class board extends JPanel implements ActionListener {
 
                 addKeyListener(new AL());                                                            //Listen for keys
                 setFocusable(true);                                                                                                                  //Allows movement         
-                ImageIcon i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Menu.jpg");                  //Image for menu
+                ImageIcon i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Menu.png");                  //Image for menu
                 menuBg = i.getImage();
                 i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Background.jpg");  //Image for background
                 background = i.getImage();                                                           //Give the background the image
