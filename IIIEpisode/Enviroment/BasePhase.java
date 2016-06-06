@@ -2,9 +2,15 @@ package Enviroment;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import Attacks.NonSpriteAttack;
@@ -27,6 +33,8 @@ public class BasePhase extends EnviromentBase {
 	protected JFrame frame;
 	protected BaseCharacter[] characters;
 	
+	protected BufferedImage XSprite;
+	
 	// Constructors
 	BasePhase (JFrame frame) {
 		this.frame = frame;
@@ -47,6 +55,33 @@ public class BasePhase extends EnviromentBase {
 		
 		sAttacks = new ArrayList<SpriteAttack>();
 		nsAttacks = new ArrayList<NonSpriteAttack>();
+		
+		XSprite = GenerateSprite (System.getProperty("user.dir") + "\\Imagens\\DarthVader\\Board\\X.png", .8f);
+	}
+	
+	private BufferedImage GenerateSprite (String imageName, double scale) {
+		BufferedImage bigImg = null, aux = null;
+		
+		try {
+    		bigImg = ImageIO.read(new File(imageName));
+    		
+    		// Resize
+    		aux = new BufferedImage(
+    				(int) (bigImg.getWidth() * scale), (int) (bigImg.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
+    		Graphics2D graphics2D = aux.createGraphics();
+    		AffineTransform xform = AffineTransform.getScaleInstance(scale, scale);
+    		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+    				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+    		graphics2D.drawImage(bigImg, xform, null);
+    		graphics2D.dispose();
+    		
+    		bigImg = aux;
+    	} catch (IOException e) {
+    		System.err.println(imageName);
+    		System.exit(0);
+    	}
+		
+		return bigImg;
 	}
 
 	@Override
@@ -61,8 +96,10 @@ public class BasePhase extends EnviromentBase {
 	       	
 	       	pos = bc.getHPBarPos();
 	       	
-	       	g.drawImage(bc.getHPBar(), (int) pos[0], (int) pos[1], frame);
+	       	bc.DrawHPBar(g, frame, pos);
 	    }
+	    
+	    g.drawImage(XSprite, 312, 0, frame);
 	}
 		
 	@Override

@@ -27,10 +27,16 @@ public class BasicArtificialInteligence {
 		
 		double rand = Math.random();
 		
-		if (otherPos[0] > bc.getX() && rand < 0.6)
-			return ActionDecision.WALKRIGHT;
-		else if (rand < .6)
+		if (otherPos[0] > bc.getX()) {
+			if (rand < .4)
+				return ActionDecision.WALKRIGHT;
+			else if (rand < .55)
+				return ActionDecision.WALKLEFT;
+		}
+		else if (rand < .4)
 			return ActionDecision.WALKLEFT;
+		else if (rand < .55)
+			return ActionDecision.WALKRIGHT;
 		
 		rand = Math.random();
 		

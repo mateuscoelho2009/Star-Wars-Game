@@ -1,12 +1,16 @@
 package IIIEpisode;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.color.ColorSpace;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,6 +21,8 @@ import Common.Animation;
 import Enviroment.EnviromentBase;
 import IA.BasicArtificialInteligence;
 import IA.BasicArtificialInteligence.ActionDecision;
+import IIIEpisode.BaseCharacter.Orientation;
+import IIIEpisode.BaseCharacter.State;
 
 public class DarthVader extends BaseCharacter {
 	private static final int MAX_HEALTH_POINTS = 500;
@@ -110,14 +116,14 @@ public class DarthVader extends BaseCharacter {
 	
 	// Methods
 	private void initVader (boolean isCPU) {
+		hasOwnIntelligence = isCPU;
+		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
 			loadImage(strPath);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
-		hasOwnIntelligence = isCPU;
 		
 		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
@@ -132,14 +138,14 @@ public class DarthVader extends BaseCharacter {
 	}
 	
 	private void initVader () {
+		hasOwnIntelligence = false;
+		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
 			loadImage(strPath);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
-		hasOwnIntelligence = false;
 		
 		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
@@ -154,14 +160,14 @@ public class DarthVader extends BaseCharacter {
 	}
 	
 	private void initVader (boolean isCPU, float[] hpPos) {
+		hasOwnIntelligence = isCPU;
+		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
 			loadImage(strPath);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
-		hasOwnIntelligence = isCPU;
 		
 		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
@@ -176,14 +182,15 @@ public class DarthVader extends BaseCharacter {
 	}
 	
 	private void initVader (float[] hpPos) {
+		hasOwnIntelligence = false;
+		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
 			loadImage(strPath);
 		} catch (Exception e) {
 			System.err.println(e);
+			System.exit(1);
 		}
-		
-		hasOwnIntelligence = false;
 		
 		BAInteligence = new BasicArtificialInteligence(this, enviroment);
 		
@@ -203,7 +210,7 @@ public class DarthVader extends BaseCharacter {
 		double scale = 0.45;
 		
 		bigImg = GenerateSprite(imageName + "\\andando\\star wars fight-13.png", scale);
-    	
+		
     	BufferedImage[] standVector = new BufferedImage[3];
     	
     	standVector[0] = bigImg;
@@ -249,15 +256,12 @@ public class DarthVader extends BaseCharacter {
     	attack1Vector[0] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-18.png", scale);
-    	
     	attack1Vector[1] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-19.png", scale);
-    	
     	attack1Vector[2] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\golpe\\star wars fight-20.png", scale);
-    	
     	attack1Vector[3] = bigImg;
     	
     	attack1 = new Animation(attack1Vector, 14, true);
@@ -265,51 +269,39 @@ public class DarthVader extends BaseCharacter {
     	BufferedImage[] jumpingVector = new BufferedImage[12];
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado01.png", scale);
-    	
     	jumpingVector[0] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado02.png", scale);
-    	
     	jumpingVector[1] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado03.png", scale);
-    	
     	jumpingVector[2] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado04.png", scale);
-    	
     	jumpingVector[3] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado05.png", scale);
-    	
     	jumpingVector[4] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado06.png", scale);
-    	
     	jumpingVector[5] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado07.png", scale);
-    	
     	jumpingVector[6] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado08.png", scale);
-    	
     	jumpingVector[7] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado09.png", scale);
-    	
     	jumpingVector[8] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado10.png", scale);
-    	
     	jumpingVector[9] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado11.png", scale);
-    	
     	jumpingVector[10] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\pulo direcionado\\star wars fight-pulo direcionado12.png", scale);
-    	
     	jumpingVector[11] = bigImg;
     	
     	jumping = new Animation(jumpingVector, 6, true);
@@ -317,7 +309,6 @@ public class DarthVader extends BaseCharacter {
     	BufferedImage[] duckingVector = new BufferedImage[1];
     	
     	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
-    	
     	duckingVector[0] = bigImg;
     	
     	ducking = new Animation(duckingVector, 10);
@@ -325,19 +316,15 @@ public class DarthVader extends BaseCharacter {
     	BufferedImage[] attack2Vector = new BufferedImage[4];
     	
     	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-22.png", scale);
-    	
     	attack2Vector[0] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-23.png", scale);
-    	
     	attack2Vector[1] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-25.png", scale);
-    	
     	attack2Vector[2] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\agachando e golpeando\\star wars fight-24.png", scale);
-    	
     	attack2Vector[3] = bigImg;
     	
     	attack2 = new Animation(attack2Vector, 14, true);
@@ -345,23 +332,18 @@ public class DarthVader extends BaseCharacter {
     	BufferedImage[] dyingVector = new BufferedImage[5];
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-34.png", scale);
-    	
     	dyingVector[0] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-35.png", scale);
-    	
     	dyingVector[1] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-36.png", scale);
-    	
     	dyingVector[2] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-37.png", scale);
-    	
     	dyingVector[3] = bigImg;
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-38.png", scale);
-    	
     	dyingVector[4] = bigImg;
     	
     	dying = new Animation(dyingVector, 30, true);
@@ -369,7 +351,6 @@ public class DarthVader extends BaseCharacter {
     	BufferedImage[] deadVector = new BufferedImage[1];
     	
     	bigImg = GenerateSprite(imageName + "\\caindo e morrendo\\star wars fight-38.png", scale);
-    	
     	deadVector[0] = bigImg;
     	
     	deadAnimation = new Animation(deadVector, 10);
@@ -398,6 +379,9 @@ public class DarthVader extends BaseCharacter {
     		System.exit(0);
     	}
 		
+		if (hasOwnIntelligence)
+			bigImg = toGrayScale(bigImg);
+		
 		return bigImg;
 	}
 	
@@ -422,6 +406,9 @@ public class DarthVader extends BaseCharacter {
     		System.err.println(imageName);
     		System.exit(0);
     	}
+		
+		if (hasOwnIntelligence)
+			bigImg = toGrayScale(bigImg);
 		
 		return bigImg;
 	}

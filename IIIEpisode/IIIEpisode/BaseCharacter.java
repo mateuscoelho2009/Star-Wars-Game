@@ -1,9 +1,16 @@
 package IIIEpisode;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.WritableRaster;
+
+import javax.swing.JFrame;
 
 import localInterfaces.UserControlled;
 import Common.Sprite;
@@ -244,7 +251,83 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
 	abstract protected void initHPBar (float maxLife);
 	abstract protected void initHPBar (float maxLife, float[] hpBar);
 	
+	public void DrawHPBar (Graphics2D g, JFrame frame, float[] pos) {
+		hpBar.DrawHPBar(g, frame, pos);
+	}
+	
 	public boolean IsDead () {
 		return (hpBar.atuLife <= 0);
+	}
+	
+	public static BufferedImage toGrayScale(BufferedImage master) {
+        BufferedImage gray = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        // Automatic conversion....
+        ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+        op.filter(master, gray);
+
+        return gray;
+    }
+	
+	public static BufferedImage toSepia(BufferedImage img, int sepiaIntensity) {
+		
+		img = toGrayScale(img);
+
+	    BufferedImage sepia = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+	    // Play around with this.  20 works well and was recommended
+	    //   by another developer. 0 produces black/white image
+	    int sepiaDepth = 20;
+
+	    int w = img.getWidth();
+	    int h = img.getHeight();
+
+	    WritableRaster raster = sepia.getRaster();
+
+	    // We need 3 integers (for R,G,B color values) per pixel.
+	    int[] pixels = new int[w * h * 3];
+	    img.getRaster().getPixels(0, 0, w, h, pixels);
+
+	    for (int x = 0; x < img.getWidth(); x++) {
+	        for (int y = 0; y < img.getHeight(); y++) {
+
+	            int rgb = img.getRGB(x, y);
+	            Color color = new Color(rgb, true);
+	            int r = color.getRed();
+	            int g = color.getGreen();
+	            int b = color.getBlue();
+	            int gry = (r + g + b) / 3;
+
+	            r = g = b = gry;
+	            r = r + (sepiaDepth * 2);
+	            g = g + sepiaDepth;
+
+	            if (r > 255) {
+	                r = 255;
+	            }
+	            if (g > 255) {
+	                g = 255;
+	            }
+	            if (b > 255) {
+	                b = 255;
+	            }
+
+	            // Darken blue color to increase sepia effect
+	            b -= sepiaIntensity;
+
+	            // normalize if out of bounds
+	            if (b < 0) {
+	                b = 0;
+	            }
+	            if (b > 255) {
+	                b = 255;
+	            }
+
+	            color = new Color(r, g, b, color.getAlpha());
+	            sepia.setRGB(x, y, color.getRGB());
+
+	        }
+	    }
+
+	    return sepia;
 	}
 }
