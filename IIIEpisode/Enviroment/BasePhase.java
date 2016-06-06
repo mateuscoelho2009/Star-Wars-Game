@@ -251,9 +251,9 @@ public class BasePhase extends EnviromentBase {
 	
 	public String WinningPlayer () {
 		if (characters[0].IsDead())
-			return "Player 1";
-		else
 			return "Player 2";
+		else
+			return "Player 1";
 	}
 	
 	@Override
