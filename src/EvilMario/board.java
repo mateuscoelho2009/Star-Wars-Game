@@ -4,7 +4,6 @@ import java.awt.*;                                                              
 import java.awt.event.*;                                                                     //Imported to allow use of ActionListener
 
 import javax.swing.*;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -26,10 +25,18 @@ public class board extends JPanel implements ActionListener {
                 Menu = new menu();
 
                 addKeyListener(new AL());                                                            //Listen for keys
-                setFocusable(true);                                                                                                                  //Allows movement         
-                ImageIcon i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Menu.png");                  //Image for menu
+                setFocusable(true);
+                ImageIcon i = null;
+                //Allows movement
+                try {
+                	i = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/Menu.png");                  //Image for menu
+                } catch (Exception e) {
+                	System.out.println(e);
+                	System.exit(1);
+                }
+          
                 menuBg = i.getImage();
-                i = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/Background.jpg");  //Image for background
+                i = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/Background.jpg");  //Image for background
                 background = i.getImage();                                                           //Give the background the image
                 time = new Timer(20,this);                                                           //Timer set to update "this" class every 20 milliseconds(Approximately 50fps)
                 time.start();                                                                        //Actually start the timer

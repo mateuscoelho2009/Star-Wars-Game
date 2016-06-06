@@ -14,16 +14,16 @@ public class player {
 	static int down = 285;
     int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
     Image player;                                                                                //The player variable
-    ImageIcon playerFacingLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
-    ImageIcon playerFacingRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
-    ImageIcon playerWalkingLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingLeft.png");
-    ImageIcon playerWalkingRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeWalkingRight.png");
-    ImageIcon playerPrepairUpLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukePrepairUpLeft.png");
-    ImageIcon playerUpLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeUpLeft.png");
-    ImageIcon playerPrepairUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukePrepairUpRight.png");
-    ImageIcon playerUpRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeUpRight.png");
-    ImageIcon playerDownLeft = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeDownLeft.png");
-    ImageIcon playerDownRight = new ImageIcon("/Users/fabiomartinsfernandes/Documents/COMP/1º Semestre/CES-22/Star-Wars-Game/Imagens/Mario/LukeDownRight.png");
+    ImageIcon playerFacingLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
+    ImageIcon playerFacingRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
+    ImageIcon playerWalkingLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeWalkingLeft.png");
+    ImageIcon playerWalkingRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeWalkingRight.png");
+    ImageIcon playerPrepairUpLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukePrepairUpLeft.png");
+    ImageIcon playerUpLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeUpLeft.png");
+    ImageIcon playerPrepairUpRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukePrepairUpRight.png");
+    ImageIcon playerUpRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeUpRight.png");
+    ImageIcon playerDownLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeDownLeft.png");
+    ImageIcon playerDownRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeDownRight.png");
     
         public player() {
             player = playerFacingRight.getImage();                                               //Give the player the image
