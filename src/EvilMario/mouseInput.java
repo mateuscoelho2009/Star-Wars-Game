@@ -7,8 +7,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
+<<<<<<< HEAD:Episode2/Episode2/src/EvilMario/mouseInput.java
+=======
 import IIIEpisode.IIIGameRunner;
 
+>>>>>>> origin/master:src/EvilMario/mouseInput.java
 public class mouseInput implements MouseListener{
     public void mousePressed(MouseEvent e) {
         int mx = e.getX();
@@ -20,7 +23,11 @@ public class mouseInput implements MouseListener{
                 board.State = board.STATE.GAME;
             }
             if(mx>=325 && mx<=625) {
+<<<<<<< HEAD:Episode2/Episode2/src/EvilMario/mouseInput.java
+				//IIIGameRunner.main("");
+=======
 				IIIGameRunner.main(new String[0]);
+>>>>>>> origin/master:src/EvilMario/mouseInput.java
             }
             if(mx>=645 && mx<=945) {
             	JOptionPane.showMessageDialog(frame, "Pac");
