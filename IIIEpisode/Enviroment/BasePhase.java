@@ -50,8 +50,8 @@ public class BasePhase extends EnviromentBase {
 		
 		characters = new BaseCharacter[2];
 		
-		characters[0] = new DarthVader(this, 500, 500);
-		characters[1] = new DarthVader(this, 100, 500, true, hpPos);
+		characters[0] = new DarthVader(this, 100, 500);
+		characters[1] = new DarthVader(this, 500, 500, true, hpPos);
 		
 		sAttacks = new ArrayList<SpriteAttack>();
 		nsAttacks = new ArrayList<NonSpriteAttack>();

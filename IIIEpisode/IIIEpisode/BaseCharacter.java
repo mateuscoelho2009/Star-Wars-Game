@@ -270,8 +270,6 @@ public abstract class BaseCharacter extends Sprite implements Common.HasMoveset 
     }
 	
 	public static BufferedImage toSepia(BufferedImage img, int sepiaIntensity) {
-		
-		img = toGrayScale(img);
 
 	    BufferedImage sepia = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 	    // Play around with this.  20 works well and was recommended
