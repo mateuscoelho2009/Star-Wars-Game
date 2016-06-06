@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -18,7 +19,7 @@ import Enviroment.FirstPhaseEnv;
 public class IIIGameBoard extends JPanel implements ActionListener {
     private Timer timer;
     private final int DELAY = 10;
-    // private JFrame frame;
+    private JFrame frame;
     FirstPhaseEnv fpe;
 
     public IIIGameBoard(JFrame frame) {
@@ -26,7 +27,7 @@ public class IIIGameBoard extends JPanel implements ActionListener {
     }
     
     private void initBoard(JFrame frame) {
-        // this.frame = frame;
+        this.frame = frame;
     	
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -59,6 +60,18 @@ public class IIIGameBoard extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
     	fpe.update();
+    	
+    	if (fpe.DeadPlayerExist()) {
+    		String wName = fpe.WinningPlayer();
+    		
+    		javax.swing.JDialog f=new javax.swing.JDialog();  
+    		f.setSize(250,150);  
+    		javax.swing.JOptionPane.showMessageDialog(f,"Winning Player: " + wName + ".","Congratulations " + wName + "!!!",javax.swing.JOptionPane.DEFAULT_OPTION);
+    		f.setVisible(true);
+    		f.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+    		
+    		fpe = new FirstPhaseEnv(frame);
+    	}
         
         repaint();
     }

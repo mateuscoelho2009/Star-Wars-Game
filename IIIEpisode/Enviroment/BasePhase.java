@@ -249,6 +249,13 @@ public class BasePhase extends EnviromentBase {
 		return false;
 	};
 	
+	public String WinningPlayer () {
+		if (characters[0].IsDead())
+			return "Player 1";
+		else
+			return "Player 2";
+	}
+	
 	@Override
 	public float getPlayersInteraction (BaseCharacter gP, BaseCharacter pP) {
 		// First is the player who suffers the force.
