@@ -14,6 +14,8 @@ public class board extends JPanel implements ActionListener {
         Timer time;                                                                              //A timer
         private menu Menu;
         private frame Frame;
+        
+        
 
         public static enum STATE {MENU,GAME};
 
