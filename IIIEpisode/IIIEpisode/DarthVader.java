@@ -38,6 +38,7 @@ public class DarthVader extends BaseCharacter {
 					  deadAnimation;
 	
 	private boolean hasOwnIntelligence;
+	private boolean isMult;
 	
 	private BasicArtificialInteligence BAInteligence;
 	
@@ -59,7 +60,61 @@ public class DarthVader extends BaseCharacter {
 		
 		initVader();
 	}
+	// Mult
+	public DarthVader (EnviromentBase enviroment, int x, int y, State initialState, boolean isCPU, boolean isMult ) {
+		super(enviroment, x, y, initialState);
+		
+		initVader(isCPU, isMult);
+	}
 	
+	public DarthVader (EnviromentBase enviroment, int x, int y, boolean isCPU, boolean isMult) {
+		super(enviroment, x, y);
+		
+		initVader(isCPU, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, boolean isCPU, boolean isMult) {
+		super(enviroment);
+		
+		initVader(isCPU, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, int x, int y, State initialState, float[] hpPos, boolean isMult) {
+		super(enviroment, x, y, initialState);
+		
+		initVader(hpPos, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, int x, int y, float[] hpPos, boolean isMult) {
+		super(enviroment, x, y);
+		
+		initVader(hpPos, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, float[] hpPos, boolean isMult) {
+		super(enviroment);
+		
+		initVader(hpPos, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, int x, int y, State initialState, boolean isCPU, float[] hpPos, boolean isMult) {
+		super(enviroment, x, y, initialState);
+		
+		initVader(isCPU, hpPos, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, int x, int y, boolean isCPU, float[] hpPos, boolean isMult) {
+		super(enviroment, x, y);
+		
+		initVader(isCPU, hpPos, isMult);
+	}
+	
+	public DarthVader (EnviromentBase enviroment, boolean isCPU, float[] hpPos, boolean isMult) {
+		super(enviroment);
+		
+		initVader(isCPU, hpPos, isMult);
+	}
+	// end Mult
 	public DarthVader (EnviromentBase enviroment, int x, int y, State initialState, boolean isCPU) {
 		super(enviroment, x, y, initialState);
 		
@@ -117,6 +172,7 @@ public class DarthVader extends BaseCharacter {
 	// Methods
 	private void initVader (boolean isCPU) {
 		hasOwnIntelligence = isCPU;
+		isMult = false;
 		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
@@ -139,6 +195,7 @@ public class DarthVader extends BaseCharacter {
 	
 	private void initVader () {
 		hasOwnIntelligence = false;
+		isMult = false;
 		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
@@ -161,6 +218,7 @@ public class DarthVader extends BaseCharacter {
 	
 	private void initVader (boolean isCPU, float[] hpPos) {
 		hasOwnIntelligence = isCPU;
+		isMult = false;
 		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
@@ -183,6 +241,78 @@ public class DarthVader extends BaseCharacter {
 	
 	private void initVader (float[] hpPos) {
 		hasOwnIntelligence = false;
+		isMult = false;
+		
+		try {
+			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
+			loadImage(strPath);
+		} catch (Exception e) {
+			System.err.println(e);
+			System.exit(1);
+		}
+		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS, hpPos);
+		
+		animation = standing;
+		animation.start();
+	}
+	
+	// multiplayer
+	private void initVader (boolean isCPU, boolean isMult) {
+		hasOwnIntelligence = isCPU;
+		this.isMult = isMult;
+		
+		try {
+			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
+			loadImage(strPath);
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 30;
+		
+		initHPBar(MAX_HEALTH_POINTS);
+		
+		animation = standing;
+		animation.start();
+	}
+	
+	private void initVader (boolean isCPU, float[] hpPos, boolean isMult) {
+		hasOwnIntelligence = isCPU;
+		this.isMult = isMult;
+		
+		try {
+			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
+			loadImage(strPath);
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		
+		BAInteligence = new BasicArtificialInteligence(this, enviroment);
+		
+		mass = 100;
+		life = MAX_HEALTH_POINTS;
+		power = 50;
+		
+		initHPBar(MAX_HEALTH_POINTS, hpPos);
+		
+		animation = standing;
+		animation.start();
+	}
+	
+	private void initVader (float[] hpPos, boolean isMult) {
+		hasOwnIntelligence = false;
+		this.isMult = isMult;
 		
 		try {
 			String strPath = System.getProperty("user.dir") + "\\Imagens\\DarthVader";
@@ -418,6 +548,9 @@ public class DarthVader extends BaseCharacter {
 		
 		if (hasOwnIntelligence && Math.random() > .92) {
 			Act(BAInteligence.Decide());
+		}
+		else if (isMult){
+			//Act(Botao Recebido do Servidor);
 		}
 		
 		if (died && charState != State.DEAD && charState != State.DYING) {

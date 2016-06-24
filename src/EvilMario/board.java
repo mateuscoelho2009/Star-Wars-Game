@@ -9,22 +9,26 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class board extends JPanel implements ActionListener {
-        player p;                                                                                //Instance of player class
+        player p;
+        oponent o;
         Image background, menuBg;                                                                //The background images
         Timer time;                                                                              //A timer
         private menu Menu;
+        private MenuSFplayers menuSF;
         private frame Frame;
         
         
 
-        public static enum STATE {MENU,GAME};
+        public static enum STATE {MENU,MENUSF,GAME};
 
         public static STATE State = STATE.MENU;
 
         public board() {
                 this.addMouseListener(new mouseInput());
-                p = new player();                                                                    //Start running player class
+                p = new player();
+                o = new oponent();
                 Menu = new menu();
+                menuSF = new MenuSFplayers();
 
                 addKeyListener(new AL());                                                            //Listen for keys
                 setFocusable(true);
@@ -47,7 +51,8 @@ public class board extends JPanel implements ActionListener {
         public void actionPerformed(ActionEvent e) {
                 p.move();
                 p.jump();
-                repaint();                                                                           //Repaint
+                o.move();
+                repaint();                                                                        //Repaint
         }
 
         public void paintComponent(Graphics g) {                                                 //Graphics method
@@ -56,7 +61,10 @@ public class board extends JPanel implements ActionListener {
                                 Graphics2D g2d = (Graphics2D) g;                                             //casts 2d graphics(or however you would explain it)
 
                                 g2d.drawImage(background, -p.nx, 0, null);                                   //Draw the background image
-                                g2d.drawImage(background, -p.nx2, 0, null);                                  //Draw the background image
+                                g2d.drawImage(background, -p.nx2, 0, null);
+                                
+                                g2d.drawImage(o.getImage(), o.getX()-p.nx, 285, null);
+                                g2d.drawImage(o.getImage(), o.getX()-p.nx2, 285, null);
 
                                 if(-p.nx<-575)                                                              //If going forwards
                                         p.nx=-575;                                                              //Start placing forwards every 575px in front on the last one
@@ -69,9 +77,12 @@ public class board extends JPanel implements ActionListener {
                                         p.nx2=575;                                                              //Start placing backgrounds every 575px behind the last one
 
                                 g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);                      //Draw the player at the position he is currently(Coordinate values taken from player class)
-                } else {
+                } else if (State==STATE.MENU) {
                         g.drawImage(menuBg, 0, 0, null);
                         menu.render(g);
+                } else{
+                	g.drawImage(menuBg, 0, 0, null);
+                    menuSF.render(g);
                 }
         }
 
