@@ -105,12 +105,12 @@ public class player {
             int key = e.getKeyCode();
             if (key == KeyEvent.VK_LEFT) {
             	player = playerWalkingLeft.getImage();
-            	if(distanceTraveled<104)dx=-3;else dx=-2;
+            	if(distanceTraveled<104)dx=-4;else dx=-3;
             }
 
             if(key == KeyEvent.VK_RIGHT) {
             	player = playerWalkingRight.getImage();
-            	if(distanceTraveled<104)dx=3;else dx=2;
+            	if(distanceTraveled<104)dx=4;else dx=3;
             }
             if (key == KeyEvent.VK_UP){
             	time = 0;
