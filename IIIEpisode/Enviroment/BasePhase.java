@@ -119,6 +119,7 @@ public class BasePhase extends EnviromentBase {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		characters[0].keyPressed(e);
+		System.out.println(e);
 	}
 
 	@Override
