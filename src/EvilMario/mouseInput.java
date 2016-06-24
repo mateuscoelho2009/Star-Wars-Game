@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 
 import IIIEpisode.IIIGameRunner;
+import IIIEpisode.IIIGameRunnerMult;
 import pacman2.Pacman2;
 
 public class mouseInput implements MouseListener{
@@ -22,13 +23,13 @@ public class mouseInput implements MouseListener{
             if(mx>=325 && mx<=625) {
             	
             	if(board.State == board.STATE.MENU) board.State = board.STATE.MENUSF;
-            	//else IIIGameRunner.main(new String[0]); //1 player
+            	else IIIGameRunner.main(new String[0]); //1 player
 
             }
             if(mx>=645 && mx<=945) {
             	
             	if(board.State == board.STATE.MENU) Pacman2.main(new String[0]);
-            	//else IIIGameRunner.main(new String[0]); //2 players
+            	else IIIGameRunnerMult.main(new String[0]); //2 players
             	
             }
             if(mx>=960 && mx<=1260) {
