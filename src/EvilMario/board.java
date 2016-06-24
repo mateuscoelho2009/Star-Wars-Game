@@ -27,7 +27,7 @@ public class board extends JPanel implements ActionListener {
         public board() {
                 this.addMouseListener(new mouseInput());
                 p = new player();
-                o = new oponent[10];
+                o = new oponent[11];
                 o[0] = new oponent(600);
                 o[1] = new oponent(800);
                 o[2] = new oponent(1000);
@@ -38,6 +38,7 @@ public class board extends JPanel implements ActionListener {
                 o[7] = new oponent(1400);
                 o[8] = new oponent(1450);
                 o[9] = new oponent(1500);
+                o[10] = new oponent(10000);
                 
                 o[1].playerFacingLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/oLps.png");  //Image for player while he is     turning left
                 o[1].playerFacingRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/oRps.png");//Image for player while he is turning right
@@ -179,10 +180,10 @@ public class board extends JPanel implements ActionListener {
                                 else if(col == 2 &&  !o[i].isdead){
                                 	State = STATE.GAMEOVER;
                                 }
-                                else if(count == 10){
-                                	State = STATE.PARABENS;
-                                }
                 }
+                    if(count == 10){
+                    	State = STATE.PARABENS;
+                    }
                             	Font fnt0 = new Font("Proxima Nova", Font.BOLD, 15);
                             	g.setFont(fnt0);
                             	g.setColor(Color.WHITE);
