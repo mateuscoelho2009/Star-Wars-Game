@@ -19,4 +19,5 @@ public interface Commons {
     public static final int PLAYER_WIDTH = 22;
     public static final int PLAYER_HEIGHT = 22;
     public static final int DELAY = 17;
+    public static final int NUMBER_OF_POINTS = 92;
 }

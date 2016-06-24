@@ -70,7 +70,7 @@ public class FirstPhaseMult extends BasePhase {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		// Aqui passa as paradas
 	}
 	
 }

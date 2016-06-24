@@ -3,6 +3,7 @@ package EvilMario;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -28,9 +29,16 @@ public class mouseInput implements MouseListener{
             }
             if(mx>=645 && mx<=945) {
             	
-            	if(board.State == board.STATE.MENU) Pacman2.main(new String[0]);
-            	else IIIGameRunnerMult.main(new String[0]); //2 players
-            	
+            	if(board.State == board.STATE.MENU)
+					try {
+						Pacman2.main(new String[0]);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				else{ 
+            		IIIGameRunnerMult.main(new String[0]); //2 players
+            	}
             }
             if(mx>=960 && mx<=1260) {
             	

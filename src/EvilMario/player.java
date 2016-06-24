@@ -12,7 +12,7 @@ public class player {
 	static int limit2 = 3;
 	static int gravity = 1;
 	static int down = 285;
-    int x, dx, y, dy, nx, nx2, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
+    int x, dx, y, dy, nx, nx2, largura, altura, distanceTraveled;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
     Image player;                                                                                //The player variable
     ImageIcon playerFacingLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeLeft.png");  //Image for player while he is     turning left
     ImageIcon playerFacingRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeRight.png");//Image for player while he is turning right
@@ -28,9 +28,11 @@ public class player {
         public player() {
             player = playerFacingRight.getImage();                                               //Give the player the image
             x = 75;                                                                              //The original x position of the player
-            y = 285;                                                                             //The original y position of the player
+            y = 285;  
+            largura = 41;
+            altura = 66;
             nx = -0;                                                                             //Repeating background 1
-            nx2 = -575;                                                                          //Repeating background 2
+            nx2 = -1280;                                                                          //Repeating background 2
             distanceTraveled = 24;
         }
 
@@ -56,7 +58,7 @@ public class player {
                 distanceTraveled++;
             if(distanceTraveled<104){
                 nx=0;
-                nx2=-575;
+                nx2=-1280;
             }
             if (dx > 0){
             	counter++;

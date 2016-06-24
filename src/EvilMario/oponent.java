@@ -12,7 +12,8 @@ public class oponent {
 	static int limit2 = 3;
 	static int gravity = 1;
 	static int down = 285;
-    int x, dx=1, y, dy, nx, nx2, distanceTraveled=0;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
+	boolean isdead;
+    int x, dx=1, y, dy, nx, largura, altura, nx2, distanceTraveled=0;                                                     //x coordinate,change in x coordinate,y coordinate,1st rep bg,2nd rep bg,dist traveled
     Image player;                                                                                //The player variable
     ImageIcon playerFacingLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/opLp.png");  //Image for player while he is     turning left
     ImageIcon playerFacingRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/opRp.png");//Image for player while he is turning right
@@ -25,9 +26,12 @@ public class oponent {
 //    ImageIcon playerDownLeft = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeDownLeft.png");
 //    ImageIcon playerDownRight = new ImageIcon(System.getProperty("user.dir") + "/Imagens/Mario/LukeDownRight.png");
     
-        public oponent() {
-            player = playerFacingRight.getImage();                                               //Give the player the image
-            x = 800;                                                                              //The original x position of the player
+        public oponent(int novox) {
+            player = playerFacingRight.getImage();
+            largura = 41;
+            altura = 66;
+            isdead = false;
+            x = novox;
             y = 285;                                                                             //The original y position of the player
             nx = -0;                                                                             //Repeating background 1
             nx2 = -575;                                                                          //Repeating background 2
