@@ -1,17 +1,14 @@
 package EvilMario;
 
 import java.awt.Component;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
-<<<<<<< HEAD:Episode2/Episode2/src/EvilMario/mouseInput.java
-=======
 import IIIEpisode.IIIGameRunner;
+import pacman2.Pacman2;
 
->>>>>>> origin/master:src/EvilMario/mouseInput.java
 public class mouseInput implements MouseListener{
     public void mousePressed(MouseEvent e) {
         int mx = e.getX();
@@ -20,20 +17,23 @@ public class mouseInput implements MouseListener{
 
         if(my>=570 && my<=600) {
             if(mx>=10 && mx<=310) {
-                board.State = board.STATE.GAME;
+            	if(board.State == board.STATE.MENU) board.State = board.STATE.GAME;
             }
             if(mx>=325 && mx<=625) {
-<<<<<<< HEAD:Episode2/Episode2/src/EvilMario/mouseInput.java
-				//IIIGameRunner.main("");
-=======
-				IIIGameRunner.main(new String[0]);
->>>>>>> origin/master:src/EvilMario/mouseInput.java
+            	
+            	if(board.State == board.STATE.MENU) board.State = board.STATE.MENUSF;
+            	//else IIIGameRunner.main(new String[0]); //1 player
+
             }
             if(mx>=645 && mx<=945) {
-            	JOptionPane.showMessageDialog(frame, "Pac");
+            	
+            	if(board.State == board.STATE.MENU) Pacman2.main(new String[0]);
+            	//else IIIGameRunner.main(new String[0]); //2 players
+            	
             }
             if(mx>=960 && mx<=1260) {
-            	JOptionPane.showMessageDialog(frame, "Space");
+            	
+            	if(board.State == board.STATE.MENU) JOptionPane.showMessageDialog(frame, "Space");
             }
         }
     }

@@ -211,3 +211,8 @@ Caused by: java.net.SocketTimeoutException: Read timed out
 	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:259)
 	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:125)
 	... 16 more
+
+!ENTRY org.eclipse.core.resources 2 2 2016-06-06 20:51:27.754
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2016-06-06 20:51:27.754
+!MESSAGE The project description file (.project) for 'Episode2' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.

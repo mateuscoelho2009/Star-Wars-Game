@@ -26,7 +26,7 @@ public class IIIGameRunner extends JFrame {
 	    // setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args, boolean mode) {
 	    
 	    EventQueue.invokeLater(new Runnable() {
 	        @Override
